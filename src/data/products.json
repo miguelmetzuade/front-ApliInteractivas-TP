@@ -1,0 +1,200 @@
+[
+    {
+        "id": 4,
+        "nombre": "Auriculares Bluetooth",
+        "descripcion": "Cancelación activa de ruido, 30h de batería",
+        "precio": 89990.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    },
+    {
+        "id": 15,
+        "nombre": "Base para notebook",
+        "descripcion": "Aluminio, altura regulable, hasta 17 pulgadas",
+        "precio": 28000.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    },
+    {
+        "id": 14,
+        "nombre": "Cable HDMI 2.1 de 2m",
+        "descripcion": "Soporta 4K 120Hz y 8K 60Hz",
+        "precio": 12500.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    },
+    {
+        "id": 6,
+        "nombre": "Disco SSD NVMe 1TB",
+        "descripcion": "Lectura 7000 MB/s, formato M.2 2280",
+        "precio": 125000.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    },
+    {
+        "id": 11,
+        "nombre": "Hub USB-C 7 en 1",
+        "descripcion": "HDMI 4K, 2x USB 3.0, SD, microSD, PD 100W",
+        "precio": 35900.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    },
+    {
+        "id": 7,
+        "nombre": "Memoria RAM 16GB DDR4",
+        "descripcion": "3200 MHz CL16, disipador de aluminio",
+        "precio": 78000.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    },
+    {
+        "id": 12,
+        "nombre": "Micrófono condensador USB",
+        "descripcion": "Patrón cardioide, brazo articulado incluido",
+        "precio": 96000.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    },
+    {
+        "id": 17,
+        "nombre": "Monitor",
+        "descripcion": "Monitor Dell HD",
+        "precio": 200.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    },
+    {
+        "id": 3,
+        "nombre": "Monitor 27 pulgadas",
+        "descripcion": "QHD 2560x1440, 165Hz, panel IPS",
+        "precio": 380000.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    },
+    {
+        "id": 19,
+        "nombre": "Monitor UHD",
+        "descripcion": "Monitor Samsung Ultra HD  ---  NUEVO",
+        "precio": 2000.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 2,
+        "categoriaNombre": "HD",
+        "vendedor": null
+    },
+    {
+        "id": 18,
+        "nombre": "Mouse",
+        "descripcion": "Mouse Dell",
+        "precio": 200.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    },
+    {
+        "id": 2,
+        "nombre": "Mouse inalámbrico",
+        "descripcion": "6 botones programables, 16000 DPI",
+        "precio": 22000.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    },
+    {
+        "id": 9,
+        "nombre": "Notebook 15.6 pulgadas",
+        "descripcion": "Core i5, 16GB RAM, SSD 512GB",
+        "precio": 1250000.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    },
+    {
+        "id": 13,
+        "nombre": "Parlante Bluetooth portátil",
+        "descripcion": "Resistente al agua IPX7, 20h de autonomía",
+        "precio": 67500.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    },
+    {
+        "id": 8,
+        "nombre": "Placa de video RTX 4060",
+        "descripcion": "8GB GDDR6, ray tracing y DLSS 3",
+        "precio": 890000.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    },
+    {
+        "id": 10,
+        "nombre": "Silla gamer ergonómica",
+        "descripcion": "Soporte lumbar, apoyabrazos 4D, reclinable",
+        "precio": 320000.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    },
+    {
+        "id": 1,
+        "nombre": "Teclado mecánico RGB",
+        "descripcion": "Switches rojos, 87 teclas, retroiluminado",
+        "precio": 45000.5,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    },
+    {
+        "id": 5,
+        "nombre": "Webcam Full HD",
+        "descripcion": "1080p 60fps con micrófono estéreo",
+        "precio": 54500.0,
+        "stock": 0,
+        "disponible": false,
+        "categoriaId": 1,
+        "categoriaNombre": "perifericos",
+        "vendedor": null
+    }
+]
