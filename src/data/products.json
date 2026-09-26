@@ -15,7 +15,7 @@
         "nombre": "Base para notebook",
         "descripcion": "Aluminio, altura regulable, hasta 17 pulgadas",
         "precio": 28000.0,
-        "stock": 0,
+        "stock": 1,
         "disponible": false,
         "categoriaId": 1,
         "categoriaNombre": "perifericos",
