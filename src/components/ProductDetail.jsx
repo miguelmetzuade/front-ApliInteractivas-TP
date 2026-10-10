@@ -6,7 +6,7 @@ import './ProductDetail.css';
 // Componente 2: GET /api/productos/{id}
 const ProductDetail = () => {
   // useParams extrae los parámetros de la URL.
-  // Si la URL es /productos/4, useParams devuelve { id: '4' }.
+  // Si la URL es /products/4, useParams devuelve { id: '4' }.
   const { id } = useParams();
 
   // useNavigate devuelve una función para navegar desde código (ej: botón "Volver").
@@ -43,7 +43,7 @@ const ProductDetail = () => {
       <button className="detail-back" onClick={() => navigate(-1)}>← Volver</button>
 
       <div className="detail-card">
-        <Link to={`/productos?categoriaId=${product.categoriaId}`} className="detail-categoria">
+        <Link to={`/products?categoriaId=${product.categoriaId}`} className="detail-categoria">
           {product.categoriaNombre}
         </Link>
 

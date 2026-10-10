@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
+import ProtectedRoute from './components/ProtectedRoute'
 import ProductList from './components/ProductList'
 import ProductDetail from './components/ProductDetail'
 import CategoryList from './components/CategoryList'
@@ -7,17 +8,23 @@ import './App.css'
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
       <Navbar />
-      {/* aquí se definen todas las rutas de la app */}
+      {/* aquí se definen todas las rutas de la app (el BrowserRouter está en main.jsx) */}
       <Routes>
-        <Route path="/" element={<Navigate to="/productos" replace />} />
-        <Route path="/productos" element={<ProductList />} />
-        <Route path="/productos/:id" element={<ProductDetail />} />
-        <Route path="/categorias" element={<CategoryList />} />
+        <Route path="/" element={<Navigate to="/products" replace />} />
+        <Route path="/products" element={<ProductList />} />
+        <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="/categories" element={<CategoryList />} />
+
+        <Route element={<ProtectedRoute />}>
+          {/* <Route path="/cart" element={<Cart />} /> */}
+          {/* <Route path="/checkout" element={<Checkout />} /> */}
+        </Route>
+
         <Route path="*" element={<h2>Página no encontrada</h2>} />
       </Routes>
-    </BrowserRouter>
+    </>
   )
 }
 

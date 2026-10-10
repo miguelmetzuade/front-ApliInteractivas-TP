@@ -40,7 +40,7 @@ const CategoryList = () => {
             // Al hacer click, vamos a la lista de productos filtrada por esta categoría
             <Link
               key={categoria.id}
-              to={`/productos?categoriaId=${categoria.id}`}
+              to={`/products?categoriaId=${categoria.id}`}
               className="category-card"
             >
               {categoria.nombre}

@@ -10,7 +10,7 @@ const ProductList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // useSearchParams lee los query params de la URL. Ej: /productos?categoriaId=1
+  // useSearchParams lee los query params de la URL. Ej: /products?categoriaId=1
   const [searchParams] = useSearchParams();
   const categoriaId = searchParams.get('categoriaId');
 
@@ -50,7 +50,7 @@ const ProductList = () => {
 
       {/* operador lógico &&: el link solo aparece si hay un filtro aplicado */}
       {categoriaId && (
-        <Link to="/productos" className="product-list-clear">← Ver todos los productos</Link>
+        <Link to="/products" className="product-list-clear">← Ver todos los productos</Link>
       )}
 
       {/* Renderizado condicional: operador ternario */}
