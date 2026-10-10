@@ -1,0 +1,82 @@
+.detail-container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.detail-status {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+.detail-status.error {
+  color: #dc2626;
+}
+
+.detail-back {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.detail-card {
+  background: rgb(244, 243, 243);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.detail-categoria {
+  display: inline-block;
+  background: #007bff;
+  color: white;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.detail-nombre {
+  color: #333;
+  margin: 1rem 0 0.5rem;
+}
+
+.detail-descripcion {
+  color: #666;
+  line-height: 1.6;
+}
+
+.detail-precio {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ff9800;
+  margin: 1rem 0;
+}
+
+.detail-datos {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: #444;
+}
+
+.detail-datos li {
+  margin: 0.5rem 0;
+}
+
+.detail-datos .en-stock {
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.detail-datos .sin-stock {
+  color: #f44336;
+  font-weight: 600;
+}

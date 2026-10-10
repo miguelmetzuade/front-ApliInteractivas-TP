@@ -134,6 +134,18 @@
   font-size: 0.9rem;
 }
 
+a.btn-agregar {
+  text-decoration: none;
+}
+
+.producto-link {
+  text-decoration: none;
+}
+
+.producto-link:hover .producto-nombre {
+  color: #007bff;
+}
+
 .btn-agregar:hover {
   background: #0056b3;
 }

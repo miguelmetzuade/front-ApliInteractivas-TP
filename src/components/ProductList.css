@@ -17,6 +17,16 @@
   gap: 2rem;
 }
 
+.product-list-status {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+.product-list-status.error {
+  color: #dc2626;
+}
+
 @media (max-width: 768px) {
   .products-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
