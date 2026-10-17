@@ -1,0 +1,24 @@
+.favorites-page {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 40px var(--page-gutter) 56px;
+  background: #fff;
+}
+
+.favorites-title {
+  font-size: 24px;
+  letter-spacing: 0.24px;
+}
+
+.favorites-status {
+  padding: 40px var(--page-gutter);
+  font-size: 16px;
+  font-weight: 500;
+  color: #6c6c6c;
+}
+
+.favorites-status.error {
+  color: #dc2626;
+}

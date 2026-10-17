@@ -1,4 +1,6 @@
+import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import Navbar from './components/Navbar'
 import ProtectedRoute from './components/ProtectedRoute'
 import ProductList from './components/ProductList'
@@ -6,8 +8,17 @@ import ProductDetail from './components/ProductDetail'
 import CategoryList from './components/CategoryList'
 import Home from './components/Home'
 import Footer from './components/Footer'
+import Favorites from './components/Favorites'
+import SellerProducts from './components/SellerProducts'
+import { fetchFavorites } from './store/slices/favoriteSlice'
 
 function App() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) dispatch(fetchFavorites())
+  }, [dispatch])
+
   return (
     <>
       <Navbar />
@@ -17,6 +28,8 @@ function App() {
         <Route path="/products" element={<ProductList />} />
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/categories" element={<CategoryList />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/seller" element={<SellerProducts />} />
 
         <Route element={<ProtectedRoute />}>
           {/* <Route path="/cart" element={<Cart />} /> */}

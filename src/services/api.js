@@ -3,12 +3,12 @@ export const API_URL = 'http://localhost:8080/api';
 
 // Hace un GET al backend y devuelve el JSON de la respuesta.
 // Centraliza las opciones de fetch para no repetirlas en cada componente.
-export const getJson = async (endpoint) => {
+const requestJson = async (endpoint, options = {}) => {
   const token = localStorage.getItem('token');
 
   const response = await fetch(`${API_URL}${endpoint}`, {
     // Especificamos el método HTTP a utilizar
-    method: 'GET',
+    method: options.method ?? 'GET',
 
     headers: {
       // Indica al servidor que esperamos recibir JSON como respuesta
@@ -24,6 +24,7 @@ export const getJson = async (endpoint) => {
 
     // Permite el envío de cookies y credenciales de autenticación
     // Esto es necesario porque en el backend tenemos configuration.setAllowCredentials(true)
+    body: options.body === undefined ? undefined : JSON.stringify(options.body),
     credentials: 'include',
 
     // Especifica que esta es una petición CORS (Cross-Origin Resource Sharing)
@@ -44,5 +45,11 @@ export const getJson = async (endpoint) => {
     throw new Error(message || `Error ${response.status}`);
   }
 
+  if (response.status === 204) return null;
   return response.json();
 };
+
+export const getJson = (endpoint) => requestJson(endpoint);
+export const postJson = (endpoint, body) => requestJson(endpoint, { method: 'POST', body });
+export const patchJson = (endpoint, body) => requestJson(endpoint, { method: 'PATCH', body });
+export const deleteJson = (endpoint) => requestJson(endpoint, { method: 'DELETE' });

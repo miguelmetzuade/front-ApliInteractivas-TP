@@ -1,13 +1,32 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFavorite, removeFavorite } from '../store/slices/favoriteSlice';
 import '../styles/products/ProductCard.css';
 import iconLike from '../assets/home/like.svg';
 import iconLikeFilled from '../assets/home/like-filled.svg';
 
 const ProductCard = ({ product }) => {
-  // Por ahora el "me gusta" es solo local (no se guarda en el backend)
-  const [liked, setLiked] = useState(false);
+  const dispatch = useDispatch();
+  const liked = useSelector((state) =>
+    state.favorites.items.some((favorite) => favorite.id === product.id),
+  );
+  const pending = useSelector((state) => state.favorites.pendingIds.includes(product.id));
+  const [favoriteError, setFavoriteError] = useState('');
   const imagen = product.imagenUrl || product.imagen;
+
+  const toggleFavorite = async () => {
+    setFavoriteError('');
+    try {
+      if (liked) {
+        await dispatch(removeFavorite(product.id)).unwrap();
+      } else {
+        await dispatch(addFavorite(product)).unwrap();
+      }
+    } catch (error) {
+      setFavoriteError(typeof error === 'string' ? error : 'No se pudo actualizar favoritos');
+    }
+  };
 
   return (
     <div className="card-producto">
@@ -17,11 +36,13 @@ const ProductCard = ({ product }) => {
           className="btn-like"
           aria-label={liked ? 'Quitar de favoritos' : 'Agregar a favoritos'}
           aria-pressed={liked}
-          onClick={() => setLiked(!liked)}
+          onClick={toggleFavorite}
+          disabled={pending}
         >
           <img src={liked ? iconLikeFilled : iconLike} alt="" />
         </button>
       </div>
+      {favoriteError && <span className="favorite-error" role="alert">{favoriteError}</span>}
 
       {/* Link de react-router: navega al detalle sin recargar la página */}
       <Link to={`/products/${product.id}`} className="producto-imagen">

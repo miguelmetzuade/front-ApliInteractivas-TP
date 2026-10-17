@@ -10,6 +10,7 @@ const LINKS = [
   { to: '/', label: 'Inicio', end: true },
   { to: '/products', label: 'Productos' },
   { to: '/categories', label: 'Categorías' },
+  { to: '/seller', label: 'Mis productos' },
   { to: '/about', label: 'Acerca de' },
   { to: '/contact', label: 'Contacto' },
 ]
