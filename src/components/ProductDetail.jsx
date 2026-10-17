@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getJson } from '../services/api';
-import './ProductDetail.css';
+import '../styles/pages/ProductDetail.css';
 
 // Componente 2: GET /api/productos/{id}
 const ProductDetail = () => {

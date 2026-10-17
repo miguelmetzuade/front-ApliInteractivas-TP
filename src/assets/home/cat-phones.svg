@@ -1,0 +1,15 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icon/Phones" clip-path="url(#clip0_0_286)">
+<g id="Vector">
+</g>
+<path id="Vector_2" d="M14.625 5.25H33.375C34.6694 5.25 35.7188 6.29933 35.7188 7.59375V40.4062C35.7188 41.7007 34.6694 42.75 33.375 42.75H14.625C13.3306 42.75 12.2812 41.7007 12.2812 40.4062V7.59375C12.2812 6.29933 13.3306 5.25 14.625 5.25Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
+<path id="Vector_3" d="M22 6H26.6875" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
+<path id="Vector_4" d="M24 37.7188V37.7404" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
+<path id="Line 8" d="M13 34H35" stroke-width="2" stroke="black"/>
+</g>
+<defs>
+<clipPath id="clip0_0_286">
+<rect width="48" height="48" fill="white"/>
+</clipPath>
+</defs>
+</svg>

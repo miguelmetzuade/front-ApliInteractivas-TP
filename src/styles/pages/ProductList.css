@@ -1,0 +1,68 @@
+/* Lista de productos: basada en el frame "Products Page" del Figma */
+.product-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 40px var(--page-gutter) 56px;
+  background: #fff;
+}
+
+.product-list-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: 0.24px;
+  color: #000;
+  text-transform: capitalize;
+}
+
+/* "← Ver todos los productos": mismo estilo que el breadcrumb del Figma */
+.product-list-clear {
+  margin-top: -16px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 16px;
+  color: #a4a4a4;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.product-list-clear:hover {
+  color: #000;
+}
+
+.products-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px 16px;
+}
+
+.product-list-status {
+  padding: 40px var(--page-gutter);
+  font-size: 16px;
+  font-weight: 500;
+  color: #6c6c6c;
+}
+
+.product-list-status.error {
+  color: #dc2626;
+}
+
+@media (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .product-list-container {
+    padding-top: 24px;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+}

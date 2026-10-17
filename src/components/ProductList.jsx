@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { getJson } from '../services/api';
 import ProductCard from './ProductCard';
-import './ProductList.css';
+import '../styles/pages/ProductList.css';
 
 // Componente 1: GET /api/productos (opcionalmente filtrado por ?categoriaId=)
 const ProductList = () => {
@@ -43,10 +43,10 @@ const ProductList = () => {
 
   return (
     <div className="product-list-container">
-      <h2 className="product-list-title">
-        {/* operador lógico ||: si no hay filtro (o la lista vino vacía) usamos el título genérico */}
-        {(categoriaId && products[0]?.categoriaNombre) || 'Nuestros Productos'}
-      </h2>
+      {/* operador lógico &&: el título (nombre de la categoría) solo aparece si hay un filtro aplicado */}
+      {categoriaId && products[0]?.categoriaNombre && (
+        <h2 className="product-list-title">{products[0].categoriaNombre}</h2>
+      )}
 
       {/* operador lógico &&: el link solo aparece si hay un filtro aplicado */}
       {categoriaId && (

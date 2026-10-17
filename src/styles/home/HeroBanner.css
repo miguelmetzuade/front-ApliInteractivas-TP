@@ -1,0 +1,77 @@
+.hero-banner {
+  background: #211c24;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  row-gap: 24px;
+  padding-inline: var(--page-gutter);
+  overflow: hidden;
+}
+
+.hero-banner-content {
+  flex: 1 0 0;
+  min-width: min(400px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  padding-block: 48px;
+}
+
+.hero-banner-eyebrow {
+  color: #fff;
+  opacity: 0.4;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+.hero-banner-title {
+  margin: 0;
+  color: #fff;
+  font-size: 96px;
+  font-weight: 100;
+  line-height: 72px;
+  letter-spacing: -0.96px;
+}
+
+.hero-banner-title strong {
+  font-weight: 600;
+}
+
+.hero-banner-text {
+  color: #909090;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+/* La imagen se muestra completa, respetando su proporción, apoyada en el borde inferior del banner */
+.hero-banner-image {
+  flex: 0 1 560px;
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  padding-top: 48px;
+}
+
+.hero-banner-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 536px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .hero-banner-title {
+    font-size: 56px;
+    line-height: 56px;
+  }
+
+  .hero-banner-image {
+    flex-basis: 100%;
+    padding-top: 0;
+  }
+}

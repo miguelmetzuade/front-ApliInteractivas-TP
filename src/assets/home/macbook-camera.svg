@@ -1,0 +1,17 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="5.33032" height="5.34371" viewBox="0 0 5.33032 5.34371" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="Camera">
+<g id="Ellipse 1">
+<use xlink:href="#stroke0_0_300" fill="#0F0F0F"/>
+<mask id="stroke1_0_300" fill="white">
+<use xlink:href="#stroke0_0_300"/>
+</mask>
+<path d="M5.33032 2.67186C5.33032 4.14748 4.13709 5.34371 2.66516 5.34371C1.19323 5.34371 0 4.14748 0 2.67186C0 1.19623 1.19323 0 2.66516 0C4.13709 0 5.33032 1.19623 5.33032 2.67186Z" stroke-width="0.230484" stroke="#151515" mask="url(#stroke1_0_300)"/>
+</g>
+<ellipse id="Ellipse 4" cx="2.39827" cy="3.29526" rx="0.621857" ry="0.623434" fill="#16181E"/>
+<ellipse id="Ellipse 3" cx="2.39827" cy="2.40468" rx="0.621857" ry="0.623433" fill="#0A0B0D"/>
+<ellipse id="Ellipse 2" opacity="0.6" cx="2.66479" cy="2.67187" rx="0.888382" ry="0.890619" fill="#1F2531"/>
+</g>
+<defs>
+<path id="stroke0_0_300" d="M5.33032 2.67186C5.33032 4.14748 4.13709 5.34371 2.66516 5.34371C1.19323 5.34371 0 4.14748 0 2.67186C0 1.19623 1.19323 0 2.66516 0C4.13709 0 5.33032 1.19623 5.33032 2.67186Z"/>
+</defs>
+</svg>

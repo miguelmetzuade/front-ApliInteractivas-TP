@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getJson } from '../services/api';
-import './CategoryList.css';
+import '../styles/pages/CategoryList.css';
 
 // Componente 3: GET /api/categorias
 const CategoryList = () => {

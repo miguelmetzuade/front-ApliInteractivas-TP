@@ -1,0 +1,77 @@
+.cat-icon {
+  display: block;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.cat-icon-watch {
+  position: relative;
+  overflow: hidden;
+}
+
+.cat-icon-watch img {
+  display: block;
+}
+
+.cat-icon-watch .watch-base {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.watch-part {
+  position: absolute;
+}
+
+.watch-part img {
+  position: absolute;
+}
+
+.watch-body {
+  inset: 25%;
+}
+
+.watch-body img {
+  inset: -4.17%;
+  width: 108.34%;
+  height: 108.34%;
+}
+
+.watch-strap-bottom {
+  inset: 75% 37.5% 12.5% 37.5%;
+}
+
+.watch-strap-top {
+  inset: 12.5% 37.5% 75% 37.5%;
+}
+
+.watch-strap-bottom img,
+.watch-strap-top img {
+  inset: -16.67% -8.33%;
+  width: 116.66%;
+  height: 133.34%;
+}
+
+.watch-bars {
+  position: absolute;
+  inset: 39.29% 41.07% 37.5% 41.07%;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.watch-bar {
+  position: relative;
+  width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.watch-bar img {
+  flex: none;
+  height: 2px;
+  transform: rotate(90deg);
+}

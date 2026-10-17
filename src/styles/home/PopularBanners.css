@@ -1,0 +1,82 @@
+.popular-banners {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.popular-image {
+  position: absolute;
+  overflow: hidden;
+}
+
+.popular-image img {
+  position: absolute;
+}
+
+.popular-ipad {
+  left: 50%;
+  top: calc(50% - 137px);
+  width: 360px;
+  height: 366px;
+  transform: translate(-50%, -50%);
+}
+
+.popular-ipad img {
+  left: 11.76%;
+  top: 8.63%;
+  width: 77.11%;
+  height: 79.76%;
+}
+
+.popular-macbook {
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 360px;
+  height: 376px;
+}
+
+.popular-macbook img {
+  left: 6.61%;
+  top: 3.89%;
+  width: 88.06%;
+  height: 84.31%;
+}
+
+.popular-combo > div {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popular-combo-a {
+  left: 0;
+  top: 22px;
+  width: 284.77px;
+  height: 282.539px;
+}
+
+.popular-combo-a img {
+  flex: none;
+  width: 213.477px;
+  height: 201.812px;
+  object-fit: cover;
+  transform: rotate(30.21deg) skewX(0.41deg);
+  box-shadow: 30px 53px 82px 8px rgba(159, 159, 159, 0.15);
+}
+
+.popular-combo-b {
+  left: 117.49px;
+  top: 112.83px;
+  width: 242.568px;
+  height: 236.17px;
+}
+
+.popular-combo-b img {
+  flex: none;
+  width: 164.131px;
+  height: 186.309px;
+  object-fit: cover;
+  transform: rotate(-119.79deg) skewX(0.41deg) scaleY(-1);
+}

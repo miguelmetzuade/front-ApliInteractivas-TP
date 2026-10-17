@@ -1,0 +1,257 @@
+.featured-banners {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.featured-banners img {
+  display: block;
+}
+
+.featured-banners h2,
+.featured-banners h3 {
+  margin: 0;
+}
+
+.featured-left {
+  flex: 0 0 50%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.banner-wide-text p,
+.banner-square-text p,
+.banner-big-content p {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #909090;
+}
+
+/* PS5 */
+.banner-wide {
+  position: relative;
+  background: #fff;
+  height: 328px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 48px 0 334px;
+  overflow: hidden;
+}
+
+.banner-wide-image {
+  position: absolute;
+  left: 0;
+  right: 360px;
+  top: 0;
+  height: 343px;
+  overflow: hidden;
+}
+
+.banner-wide-image img {
+  position: absolute;
+  left: -42.5%;
+  top: -8.99%;
+  width: 142.5%;
+  height: 117.99%;
+}
+
+.banner-wide-text {
+  position: relative;
+  flex: 1 0 0;
+  max-width: 404px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.banner-wide-text h2 {
+  font-size: 49px;
+  font-weight: 500;
+  line-height: 40px;
+  color: #000;
+  white-space: nowrap;
+}
+
+/* AirPods / Vision Pro */
+.banner-squares {
+  display: flex;
+  height: 272px;
+}
+
+.banner-square {
+  position: relative;
+  flex: 1 0 0;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 48px 0 156px;
+  overflow: hidden;
+}
+
+.banner-square-light {
+  background: #ededed;
+  color: #000;
+}
+
+.banner-square-dark {
+  background: #353535;
+  color: #fff;
+}
+
+.banner-square-text {
+  position: relative;
+  width: 160px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.banner-square-text h3 {
+  font-size: 29px;
+  font-weight: 300;
+  line-height: 40px;
+}
+
+.banner-square-text strong {
+  font-weight: 500;
+}
+
+.banner-square-image {
+  position: absolute;
+  overflow: hidden;
+}
+
+.banner-airpods {
+  left: 0;
+  right: 256px;
+  top: 0;
+  height: 272px;
+}
+
+.banner-airpods img {
+  position: absolute;
+  left: -135.58%;
+  top: -0.01%;
+  width: 235.58%;
+  height: 100.01%;
+}
+
+.banner-vision {
+  inset: 15.07% 62.22% 15.07% 0;
+}
+
+.banner-vision img {
+  width: 100%;
+  height: 100%;
+  object-position: bottom;
+  transform: scaleX(-1);
+}
+
+/* MacBook Air */
+.banner-big {
+  position: relative;
+  flex: 0 0 50%;
+  min-width: 0;
+  height: 600px;
+  background: #ededed;
+  display: flex;
+  align-items: center;
+  padding: 44px 264px 44px 56px;
+  overflow: hidden;
+}
+
+.banner-big-content {
+  position: relative;
+  z-index: 1;
+  flex: 1 0 0;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.banner-big-content h2 {
+  font-size: 64px;
+  font-weight: 100;
+  line-height: 56px;
+  color: #000;
+}
+
+.banner-big-content h2 strong {
+  font-weight: 500;
+}
+
+.banner-big-macbook {
+  bottom: 49px;
+  left: calc(50% + 214px);
+  transform: translateX(-50%);
+}
+
+@media (max-width: 1200px) {
+  .featured-banners {
+    flex-direction: column;
+  }
+
+  .featured-left,
+  .banner-big {
+    width: 100%;
+    flex: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-wide {
+    padding: 220px 16px 32px;
+    height: auto;
+  }
+
+  .banner-wide-image {
+    right: 0;
+    height: 220px;
+  }
+
+  .banner-wide-image img {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .banner-squares {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .banner-square {
+    height: 272px;
+    flex: none;
+    padding-left: 16px;
+    padding-right: 24px;
+  }
+
+  .banner-big {
+    height: auto;
+    padding: 44px 16px 340px;
+  }
+
+  .banner-big-macbook {
+    bottom: 24px;
+    left: 30%;
+    transform: translateX(-50%) scale(0.6);
+    transform-origin: bottom center;
+  }
+
+  .banner-big-content h2,
+  .banner-wide-text h2 {
+    font-size: 40px;
+    white-space: normal;
+  }
+}

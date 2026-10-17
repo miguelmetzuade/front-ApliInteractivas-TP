@@ -1,7 +1,7 @@
 /* Estilos base globales. Los estilos de cada componente están en su propio .css */
 :root {
-  font: 18px/145% system-ui, 'Segoe UI', Roboto, sans-serif;
-  color: #333;
+  font: 16px/145% 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  color: #000;
   background: #fff;
   color-scheme: light;
   font-synthesis: none;
@@ -9,9 +9,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  /* Margen lateral para que el contenido quede en 1120px como en el Figma */
+  --page-gutter: max(16px, calc((100% - 1120px) / 2));
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {

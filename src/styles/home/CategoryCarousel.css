@@ -1,0 +1,36 @@
+.category-carousel {
+  background: #fafafa;
+}
+
+.carousel-arrows {
+  display: flex;
+  gap: 16px;
+}
+
+.carousel-arrows button {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.carousel-arrows img {
+  display: block;
+}
+
+.arrow-flipped {
+  transform: rotate(180deg);
+}
+
+.carousel-track {
+  display: flex;
+  gap: 32px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}

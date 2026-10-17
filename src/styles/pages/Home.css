@@ -1,0 +1,10 @@
+/* Home: basada en el frame "Home" del Figma. Cada sección tiene sus estilos en components/home y components/ui */
+.home {
+  background: #fafafa;
+  width: 100%;
+}
+
+.home-products {
+  background: #fff;
+  padding-block: 56px;
+}

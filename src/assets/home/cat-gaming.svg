@@ -1,0 +1,15 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icon/Gaming" clip-path="url(#clip0_0_317)">
+<g id="Vector">
+</g>
+<path id="Vector_2" d="M8 12H40C42.2091 12 44 13.7909 44 16V32C44 34.2091 42.2091 36 40 36H8C5.79086 36 4 34.2091 4 32V16C4 13.7909 5.79086 12 8 12Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
+<path id="Vector_3" d="M12 24H20M16 20V28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
+<path id="Vector_4" d="M30 22V22.0207" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
+<path id="Vector_5" d="M36 25.9999V26.0206" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
+</g>
+<defs>
+<clipPath id="clip0_0_317">
+<rect width="48" height="48" fill="white"/>
+</clipPath>
+</defs>
+</svg>

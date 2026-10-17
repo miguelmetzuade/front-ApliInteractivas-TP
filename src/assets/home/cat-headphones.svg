@@ -1,0 +1,14 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icon/Headphones" clip-path="url(#clip0_0_272)">
+<g id="Vector">
+</g>
+<path id="Vector_2" d="M12 26H14C16.2091 26 18 27.7909 18 30V36C18 38.2091 16.2091 40 14 40H12C9.79086 40 8 38.2091 8 36V30C8 27.7909 9.79086 26 12 26Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
+<path id="Vector_3" d="M34 26H36C38.2091 26 40 27.7909 40 30V36C40 38.2091 38.2091 40 36 40H34C31.7909 40 30 38.2091 30 36V30C30 27.7909 31.7909 26 34 26Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
+<path id="Vector_4" d="M8 30V24C8 19.7565 9.68571 15.6869 12.6863 12.6863C15.6869 9.68571 19.7565 8 24 8C28.2435 8 32.3131 9.68571 35.3137 12.6863C38.3143 15.6869 40 19.7565 40 24V30" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
+</g>
+<defs>
+<clipPath id="clip0_0_272">
+<rect width="48" height="48" fill="white"/>
+</clipPath>
+</defs>
+</svg>

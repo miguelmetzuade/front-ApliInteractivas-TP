@@ -1,0 +1,125 @@
+/* Tarjeta de producto según el componente "Product Card" del Figma */
+.card-producto {
+  background: #f6f6f6;
+  border-radius: 9px;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.producto-top {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.btn-like {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.btn-like img {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
+.producto-imagen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 160px;
+  text-decoration: none;
+}
+
+.producto-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.producto-imagen-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background: #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  font-weight: 200;
+  color: #9a9a9a;
+  text-transform: uppercase;
+}
+
+.producto-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  text-align: center;
+  color: #000;
+  flex-grow: 1;
+}
+
+.producto-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.producto-nombre {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.producto-link:hover .producto-nombre {
+  text-decoration: underline;
+}
+
+.producto-precio {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.72px;
+}
+
+.sin-stock {
+  color: #f44336;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.btn-comprar {
+  margin-top: 8px;
+  background: #000;
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px 64px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+
+.btn-comprar:hover {
+  background: #333;
+}

@@ -1,49 +1,53 @@
-import { Link, useLocation } from 'react-router-dom'
-import '../styles/Navbar.css'
+import { Link, NavLink } from 'react-router-dom'
+import '../styles/layout/Navbar.css'
+import logo from '../assets/home/logo.svg'
+import iconSearch from '../assets/home/icon-search.svg'
+import iconFavorites from '../assets/home/icon-favorites.svg'
+import iconCart from '../assets/home/icon-cart.svg'
+import iconUser from '../assets/home/icon-user.svg'
+
+const LINKS = [
+  { to: '/', label: 'Inicio', end: true },
+  { to: '/products', label: 'Productos' },
+  { to: '/categories', label: 'Categorías' },
+  { to: '/about', label: 'Acerca de' },
+  { to: '/contact', label: 'Contacto' },
+]
 
 function Navbar() {
-  const location = useLocation()
-
-  // startsWith: "Productos" queda activo también en el detalle (/products/4)
-  const isActive = (path) =>
-    path === '/' ? location.pathname === '/' : location.pathname.startsWith(path)
-
   return (
-    <nav className="navbar">
+    <header className="navbar">
       <div className="navbar-container">
-        <Link to="/" className="navbar-brand">
-          🛒 E-Commerce UADE
+        <Link to="/" className="navbar-brand" aria-label="Inicio">
+          <img src={logo} alt="cyber" />
         </Link>
 
-        <ul className="nav-menu">
-          <li>
-            <Link to="/" className={isActive('/') ? 'nav-link active' : 'nav-link'}>
-              Inicio
-            </Link>
-          </li>
-          <li>
-            <Link to="/products" className={isActive('/products') ? 'nav-link active' : 'nav-link'}>
-              Productos
-            </Link>
-          </li>
-          <li>
-            <Link to="/categories" className={isActive('/categories') ? 'nav-link active' : 'nav-link'}>
-              Categorías
-            </Link>
-          </li>
-          <li>
-            <Link to="/about" className={isActive('/about') ? 'nav-link active' : 'nav-link'}>
-              Acerca de
-            </Link>
-          </li>
-          <li>
-            <Link to="/contact" className={isActive('/contact') ? 'nav-link active' : 'nav-link'}>
-              Contacto
-            </Link>
-          </li>
-        </ul>
+        {/* Por ahora el buscador es solo visual: falta el endpoint de búsqueda */}
+        <label className="navbar-search">
+          <img src={iconSearch} alt="" />
+          <input type="search" placeholder="Buscar" />
+        </label>
+
+        <nav>
+          <ul className="nav-menu">
+            {LINKS.map(({ to, label, end }) => (
+              <li key={to}>
+                {/* NavLink agrega la clase "active" sola cuando la ruta coincide */}
+                <NavLink to={to} end={end} className="nav-link">
+                  {label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="navbar-icons">
+          <Link to="/favorites" aria-label="Favoritos"><img src={iconFavorites} alt="" /></Link>
+          <Link to="/cart" aria-label="Carrito"><img src={iconCart} alt="" /></Link>
+          <Link to="/login" aria-label="Mi cuenta"><img src={iconUser} alt="" /></Link>
+        </div>
       </div>
-    </nav>
+    </header>
   )
 }
 

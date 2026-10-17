@@ -1,0 +1,50 @@
+.macbook {
+  position: absolute;
+  width: 292px;
+  height: 502px;
+}
+
+.macbook > * {
+  position: absolute;
+}
+
+.macbook img {
+  display: block;
+}
+
+.macbook-body {
+  inset: 93.26% -183.9% 0 0;
+  overflow: hidden;
+}
+
+.macbook-body > img {
+  position: absolute;
+  top: -13.07%;
+  left: 0;
+  width: 100%;
+  height: 113.07%;
+}
+
+.macbook-screen-body {
+  inset: 0 -158.81% 6.74% 25.22%;
+}
+
+.macbook-display {
+  inset: 2.45% -154.84% 12.05% 29.07%;
+}
+
+.macbook-notch {
+  inset: 2.45% -56.78% 94.83% 127.13%;
+}
+
+.macbook-camera {
+  inset: 2.75% -42.86% 96.19% 141.04%;
+}
+
+.macbook-screen-body > img,
+.macbook-display > img,
+.macbook-notch > img,
+.macbook-camera > img {
+  width: 100%;
+  height: 100%;
+}
