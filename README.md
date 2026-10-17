@@ -1,16 +1,57 @@
-# React + Vite
+# E-Commerce UADE — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend del trabajo práctico de **Aplicaciones Interactivas (UADE)**. Es una tienda online hecha con React que consume la API REST del backend en Spring Boot.
 
-Currently, two official plugins are available:
+## Tecnologías
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- [React 19](https://react.dev/)
+- [Vite](https://vite.dev/) (servidor de desarrollo y build)
+- [React Router](https://reactrouter.com/) (navegación entre páginas)
+- ESLint
 
-## React Compiler
+## Requisitos
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js y npm
+- El backend corriendo en `http://localhost:8080` (la URL base se configura en `src/services/api.js`)
 
-## Expanding the ESLint configuration
+## Cómo correrlo
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+npm run dev
+```
+
+La app queda disponible en `http://localhost:5173`.
+
+### Scripts
+
+| Comando           | Descripción                                   |
+| ----------------- | --------------------------------------------- |
+| `npm run dev`     | Levanta el servidor de desarrollo con HMR     |
+| `npm run build`   | Genera el build de producción en `dist/`      |
+| `npm run preview` | Sirve localmente el build de producción       |
+| `npm run lint`    | Corre ESLint sobre el proyecto                |
+
+## Rutas
+
+| Ruta             | Componente      | Endpoint del backend                    |
+| ---------------- | --------------- | --------------------------------------- |
+| `/`              | —               | Redirige a `/products`                  |
+| `/products`      | `ProductList`   | `GET /api/productos` (`?categoriaId=`)  |
+| `/products/:id`  | `ProductDetail` | `GET /api/productos/{id}`               |
+| `/categories`    | `CategoryList`  | `GET /api/categorias`                   |
+
+Las rutas que requieren login (carrito, checkout) van dentro de `ProtectedRoute` en `src/App.jsx`.
+
+## Estructura
+
+```
+src/
+├── components/      # Componentes de la app, cada uno con su .css
+├── services/
+│   └── api.js       # Llamadas al backend (fetch + token JWT)
+├── styles/          # Estilos compartidos (Navbar)
+├── App.jsx          # Definición de rutas
+├── main.jsx         # Punto de entrada (BrowserRouter)
+└── index.css        # Estilos base globales
+```
