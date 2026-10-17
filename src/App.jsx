@@ -4,7 +4,6 @@ import ProtectedRoute from './components/ProtectedRoute'
 import ProductList from './components/ProductList'
 import ProductDetail from './components/ProductDetail'
 import CategoryList from './components/CategoryList'
-import './App.css'
 
 function App() {
   return (
