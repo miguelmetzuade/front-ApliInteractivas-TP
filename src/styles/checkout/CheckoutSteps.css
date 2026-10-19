@@ -1,0 +1,78 @@
+/* Indicador de pasos ("Steps" del Figma) */
+.checkout-steps {
+  list-style: none;
+  margin: 0;
+  padding: 72px var(--page-gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.checkout-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  color: #b2b2b2;
+}
+
+.checkout-step.active {
+  color: #000;
+}
+
+.step-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+/* El ícono de pago es un círculo con el dibujo blanco adentro */
+.step-icon-payment {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #b2b2b2;
+}
+
+.step-icon-payment.active {
+  background: #000;
+}
+
+.step-icon-payment img {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  right: 26.26%;
+  bottom: 0;
+}
+
+.step-text {
+  display: flex;
+  flex-direction: column;
+  width: 128px;
+  font-weight: 500;
+}
+
+.step-number {
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.42px;
+}
+
+.step-label {
+  font-size: 19px;
+  line-height: 24px;
+  letter-spacing: 0.57px;
+}
+
+@media (max-width: 700px) {
+  .checkout-steps {
+    padding-block: 40px;
+  }
+
+  /* En celular solo se ve el texto del paso actual */
+  .checkout-step:not(.active) .step-text {
+    display: none;
+  }
+}

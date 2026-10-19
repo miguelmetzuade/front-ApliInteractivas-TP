@@ -116,3 +116,24 @@
     scrollbar-width: none;
   }
 }
+
+/* Contador de unidades en el ícono del carrito */
+.navbar-cart {
+  position: relative;
+}
+
+.navbar-cart-count {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: #000;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: center;
+}

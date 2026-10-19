@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { getJson } from '../services/api';
+import { addToCart } from '../store/slices/cartSlice';
+import '../styles/ui/Button.css';
 import '../styles/pages/ProductDetail.css';
 
 // Componente 2: GET /api/productos/{id}
@@ -15,6 +18,20 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const dispatch = useDispatch();
+  const adding = useSelector((state) => state.cart.pendingIds.includes(Number(id)));
+  const [cartMessage, setCartMessage] = useState(null);
+
+  const handleAddToCart = async () => {
+    setCartMessage(null);
+    try {
+      await dispatch(addToCart({ productoId: product.id, cantidad: 1 })).unwrap();
+      setCartMessage({ error: false, text: 'Producto agregado al carrito.' });
+    } catch (err) {
+      setCartMessage({ error: true, text: typeof err === 'string' ? err : 'No se pudo agregar al carrito' });
+    }
+  };
 
   // Se vuelve a ejecutar si cambia el id de la URL
   useEffect(() => {
@@ -63,6 +80,22 @@ const ProductDetail = () => {
           {/* operador ||: si el producto no tiene vendedor mostramos un texto alternativo */}
           <li><strong>Vendedor:</strong> {product.vendedor || 'Sin vendedor'}</li>
         </ul>
+
+        <div className="detail-cart">
+          <button
+            type="button"
+            className="btn-primary"
+            onClick={handleAddToCart}
+            disabled={adding || product.stock <= 0}
+          >
+            {adding ? 'Agregando...' : 'Agregar al carrito'}
+          </button>
+          {cartMessage && (
+            <p className={cartMessage.error ? 'detail-cart-message error' : 'detail-cart-message'} role="status">
+              {cartMessage.text} {!cartMessage.error && <Link to="/cart">Ver carrito</Link>}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

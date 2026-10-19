@@ -51,5 +51,6 @@ const requestJson = async (endpoint, options = {}) => {
 
 export const getJson = (endpoint) => requestJson(endpoint);
 export const postJson = (endpoint, body) => requestJson(endpoint, { method: 'POST', body });
+export const putJson = (endpoint, body) => requestJson(endpoint, { method: 'PUT', body });
 export const patchJson = (endpoint, body) => requestJson(endpoint, { method: 'PATCH', body });
 export const deleteJson = (endpoint) => requestJson(endpoint, { method: 'DELETE' });

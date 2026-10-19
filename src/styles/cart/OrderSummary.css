@@ -1,0 +1,143 @@
+/* "Order Summary" del Figma (columna derecha del carrito) */
+.order-summary {
+  flex: 1 1 calc(50% - 24px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 56px 64px;
+  border: 1px solid #ebebeb;
+  border-radius: 10px;
+}
+
+.order-summary-title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 16px;
+  color: #111;
+}
+
+.order-summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.order-summary-content .btn-primary {
+  width: 100%;
+}
+
+.order-summary-block {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.summary-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summary-field-label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  color: #545454;
+}
+
+.summary-input,
+.summary-input-with-button input {
+  font: inherit;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: -0.07px;
+  color: #000;
+}
+
+.summary-input {
+  width: 100%;
+  padding: 16px;
+  background: #fff;
+  border: 0.5px solid #9f9f9f;
+  border-radius: 7px;
+}
+
+.summary-input::placeholder,
+.summary-input-with-button input::placeholder {
+  color: #979797;
+}
+
+.summary-input:disabled {
+  cursor: not-allowed;
+}
+
+.summary-input-with-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.summary-input-with-button input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.summary-apply {
+  flex-shrink: 0;
+  height: 32px;
+  padding: 8px 16px;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: #000;
+  cursor: pointer;
+}
+
+.summary-apply:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.summary-prices {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 16px;
+  line-height: 32px;
+  color: #545454;
+}
+
+.summary-row > span:last-child {
+  font-weight: 500;
+  letter-spacing: 0.48px;
+  color: #000;
+  text-align: right;
+}
+
+.summary-row-strong {
+  font-weight: 500;
+  letter-spacing: 0.48px;
+  color: #000;
+}
+
+@media (max-width: 600px) {
+  .order-summary {
+    padding: 32px 24px;
+  }
+}

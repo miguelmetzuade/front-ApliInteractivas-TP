@@ -10,13 +10,19 @@ import Home from './components/Home'
 import Footer from './components/Footer'
 import Favorites from './components/Favorites'
 import SellerProducts from './components/SellerProducts'
+import Cart from './components/Cart'
+import Checkout from './components/Checkout'
 import { fetchFavorites } from './store/slices/favoriteSlice'
+import { fetchCart } from './store/slices/cartSlice'
 
 function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (localStorage.getItem('token')) dispatch(fetchFavorites())
+    if (localStorage.getItem('token')) {
+      dispatch(fetchFavorites())
+      dispatch(fetchCart())
+    }
   }, [dispatch])
 
   return (
@@ -32,8 +38,8 @@ function App() {
         <Route path="/seller" element={<SellerProducts />} />
 
         <Route element={<ProtectedRoute />}>
-          {/* <Route path="/cart" element={<Cart />} /> */}
-          {/* <Route path="/checkout" element={<Checkout />} /> */}
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Route>
 
         <Route path="*" element={<h2>Página no encontrada</h2>} />

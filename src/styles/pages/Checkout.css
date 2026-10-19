@@ -1,0 +1,601 @@
+/* Checkout: basado en los frames "Step 1", "Step 2" y "Step 3" del Figma */
+.checkout-page {
+  background: #fff;
+}
+
+.checkout-message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 112px var(--page-gutter);
+}
+
+.checkout-message a {
+  color: #000;
+  font-weight: 500;
+}
+
+/* Oculta el input nativo (radio / checkbox) pero lo deja accesible con teclado y lector de pantalla */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  border: 0;
+}
+
+/* ---- Contenido de los pasos 1 y 2 ---- */
+.checkout-step-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
+  min-height: 688px;
+  padding: 48px var(--page-gutter);
+}
+
+.checkout-block {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.checkout-block-list {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.checkout-heading {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  color: #17183b;
+}
+
+.checkout-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 24px;
+}
+
+.checkout-icon-button {
+  display: flex;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.checkout-icon-button img,
+.radio-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+/* Inputs del Figma ("Field": borde gris, 48px de alto) */
+.checkout-input {
+  width: 100%;
+  height: 48px;
+  padding: 12px 16px;
+  background: #fff;
+  border: 0.5px solid #cecece;
+  border-radius: 7px;
+  font: inherit;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: -0.07px;
+  color: #000;
+}
+
+.checkout-input::placeholder {
+  color: #979797;
+}
+
+.checkout-fields-row {
+  display: flex;
+  gap: 16px;
+}
+
+.checkout-fields-row > * {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* ---- Paso 1: direcciones ---- */
+.address-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.address-list:empty {
+  display: none;
+}
+
+.address-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px;
+  background: #f6f6f6;
+  border-radius: 7px;
+}
+
+.address-card-content {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: #17183b;
+  cursor: pointer;
+}
+
+.address-card-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.address-name {
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+}
+
+.address-tag {
+  padding: 4px 8px;
+  background: #000;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.address-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 40px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.address-actions {
+  display: flex;
+  gap: 24px;
+}
+
+.address-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: #f6f6f6;
+  border-radius: 7px;
+}
+
+.address-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+/* "Add New Address": línea punteada con el + en el medio */
+.add-address {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.add-address-line {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 24px;
+}
+
+.add-address-line img:not(.add-address-icon) {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 0.5px;
+}
+
+.add-address-line-right {
+  transform: rotate(180deg);
+}
+
+.add-address-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.add-address-text {
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.1px;
+  color: #000;
+}
+
+/* ---- Paso 2: métodos de envío ---- */
+.shipping-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.shipping-method {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #d1d1d8;
+  border-radius: 11px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #a2a3b1;
+  cursor: pointer;
+}
+
+.shipping-method.selected {
+  color: #17183b;
+}
+
+.shipping-method-text {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.shipping-method-label {
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  white-space: nowrap;
+}
+
+.shipping-method.selected .shipping-method-label {
+  color: #000;
+}
+
+.shipping-method-date {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  white-space: nowrap;
+}
+
+.shipping-method-date img {
+  width: 16px;
+  height: 16px;
+}
+
+.shipping-date-input {
+  padding: 4px 8px;
+  border: 0.5px solid #cecece;
+  border-radius: 7px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  color: #17183b;
+}
+
+/* ---- Paso 3: resumen y pago ---- */
+.payment-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 96px;
+  padding: 24px var(--page-gutter) 72px;
+}
+
+.payment-summary {
+  flex: 1 1 calc(50% - 48px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 24px;
+  background: #fff;
+  border: 1px solid #ebebeb;
+  border-radius: 10px;
+}
+
+.payment-summary-title {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.6px;
+  color: #000;
+}
+
+.payment-products {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.payment-product {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0 16px 16px;
+  background: #f6f6f6;
+  border-radius: 13px;
+}
+
+.payment-product-image {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.payment-product-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: #e8e8e8;
+  font-size: 18px;
+  font-weight: 300;
+  color: #9a9a9a;
+  text-transform: uppercase;
+}
+
+.payment-product-text {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-right: 24px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #000;
+}
+
+.payment-product-text strong {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.payment-details {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.payment-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.payment-detail-label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  color: #545454;
+}
+
+.payment-detail-value {
+  font-size: 16px;
+  line-height: 24px;
+  color: #000;
+}
+
+.summary-row strong {
+  font-weight: 700;
+}
+
+.payment-right {
+  flex: 1 1 calc(50% - 48px);
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.payment-details-block {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.payment-top {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.payment-title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.6px;
+  color: #000;
+}
+
+.payment-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 56px;
+}
+
+.payment-tab {
+  padding: 8px 0;
+  background: none;
+  border: none;
+  border-bottom: 1px solid transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.42px;
+  color: #717171;
+  cursor: pointer;
+}
+
+.payment-tab.active {
+  border-bottom-color: #000;
+  color: #000;
+}
+
+.payment-card {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.payment-card-image {
+  width: 337px;
+  max-width: 100%;
+  height: 190px;
+  object-fit: cover;
+}
+
+.payment-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #000;
+  cursor: pointer;
+}
+
+.checkbox-icon {
+  flex-shrink: 0;
+  width: 16.333px;
+  height: 15.667px;
+}
+
+.checkbox-empty {
+  border: 1.5px solid #000;
+  border-radius: 3px;
+}
+
+.checkbox-field:has(input:focus-visible) .checkbox-icon,
+.address-card-content:has(input:focus-visible) .radio-icon,
+.shipping-method:has(input:focus-visible) .radio-icon {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+  border-radius: 50%;
+}
+
+.payment-buttons {
+  flex-wrap: nowrap;
+  gap: 23px;
+}
+
+.payment-buttons > button {
+  flex: 1 1 0;
+  min-width: 0;
+  padding-inline: 16px;
+}
+
+/* ---- Confirmación ---- */
+.order-confirmation {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 640px;
+  padding: 112px var(--page-gutter);
+  box-sizing: content-box;
+}
+
+.order-confirmation-text {
+  font-size: 16px;
+  line-height: 24px;
+  color: #545454;
+}
+
+.order-confirmation .btn-primary {
+  align-self: flex-start;
+}
+
+@media (max-width: 960px) {
+  .payment-step {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 48px;
+  }
+
+  .payment-summary,
+  .payment-right {
+    flex: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .checkout-step-content {
+    min-height: 0;
+  }
+
+  .checkout-buttons > button {
+    flex: 1 1 0;
+    padding-inline: 16px;
+  }
+
+  .shipping-method,
+  .shipping-method-text {
+    flex-wrap: wrap;
+  }
+
+  .address-card {
+    padding: 16px;
+  }
+}
+
+/* Campo de la tarjeta con su mensaje de error */
+.payment-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.checkout-input.invalid {
+  border-color: #dc2626;
+}
+
+.payment-field-error {
+  font-size: 12px;
+  line-height: 16px;
+  color: #dc2626;
+}

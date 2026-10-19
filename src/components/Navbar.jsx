@@ -1,4 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { selectCartCount } from '../store/slices/cartSlice'
 import '../styles/layout/Navbar.css'
 import logo from '../assets/home/logo.svg'
 import iconSearch from '../assets/home/icon-search.svg'
@@ -16,6 +18,8 @@ const LINKS = [
 ]
 
 function Navbar() {
+  const cartCount = useSelector(selectCartCount)
+
   return (
     <header className="navbar">
       <div className="navbar-container">
@@ -44,7 +48,10 @@ function Navbar() {
 
         <div className="navbar-icons">
           <Link to="/favorites" aria-label="Favoritos"><img src={iconFavorites} alt="" /></Link>
-          <Link to="/cart" aria-label="Carrito"><img src={iconCart} alt="" /></Link>
+          <Link to="/cart" aria-label={`Carrito (${cartCount})`} className="navbar-cart">
+            <img src={iconCart} alt="" />
+            {cartCount > 0 && <span className="navbar-cart-count">{cartCount}</span>}
+          </Link>
           <Link to="/login" aria-label="Mi cuenta"><img src={iconUser} alt="" /></Link>
         </div>
       </div>

@@ -80,3 +80,24 @@
   color: #f44336;
   font-weight: 600;
 }
+
+.detail-cart {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 1.5rem;
+}
+
+.detail-cart-message {
+  color: #444;
+}
+
+.detail-cart-message.error {
+  color: #dc2626;
+}
+
+.detail-cart-message a {
+  color: #000;
+  font-weight: 500;
+}
