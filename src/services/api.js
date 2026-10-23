@@ -46,7 +46,13 @@ const requestJson = async (endpoint, options = {}) => {
   }
 
   if (response.status === 204) return null;
-  return response.json();
+  // Algunos endpoints responden texto plano (ej: el registro devuelve "User registered successfully")
+  const text = await response.text();
+  try {
+    return JSON.parse(text);
+  } catch {
+    return text;
+  }
 };
 
 export const getJson = (endpoint) => requestJson(endpoint);
