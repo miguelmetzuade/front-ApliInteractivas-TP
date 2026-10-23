@@ -33,12 +33,12 @@ const requestJson = async (endpoint, options = {}) => {
   });
 
   if (!response.ok) {
-    // El GlobalExceptionHandler devuelve el mensaje como texto plano,
-    // y SecurityConfig devuelve {"error": "..."} en los 401/403
+    // Todos los errores del backend (GlobalExceptionHandler y los 401/403 de SecurityConfig)
+    // vienen como ErrorResponse: { status, error, mensaje, timestamp }
     const text = await response.text();
     let message = text;
     try {
-      message = JSON.parse(text).error ?? text;
+      message = JSON.parse(text).mensaje ?? text;
     } catch {
       // no era JSON: usamos el texto tal cual
     }
@@ -46,7 +46,7 @@ const requestJson = async (endpoint, options = {}) => {
   }
 
   if (response.status === 204) return null;
-  // Algunos endpoints responden texto plano (ej: el registro devuelve "User registered successfully")
+  // El backend responde JSON, pero si algún endpoint devolviera texto plano no rompemos la app
   const text = await response.text();
   try {
     return JSON.parse(text);
