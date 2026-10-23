@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { deleteJson, getJson, postJson, putJson } from '../../services/api';
 import { placeOrder } from './checkoutSlice';
+import { logout } from './authSlice';
 
 const errorMessage = (error) => error.message || 'Ocurrió un error inesperado';
 
@@ -114,6 +115,14 @@ const cartSlice = createSlice({
       .addCase(placeOrder.fulfilled, (state) => {
         state.items = [];
         state.total = 0;
+      })
+      // Al cerrar sesión no queda el carrito del usuario anterior
+      .addCase(logout, (state) => {
+        state.items = [];
+        state.total = 0;
+        state.status = 'idle';
+        state.error = null;
+        state.actionError = null;
       })
       .addMatcher(
         isAnyOf(addToCart.pending, updateCartItem.pending, removeCartItem.pending),

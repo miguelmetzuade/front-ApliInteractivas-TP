@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { deleteJson, getJson, postJson } from '../../services/api';
+import { logout } from './authSlice';
 
 const errorMessage = (error) => error.message || 'Ocurrió un error inesperado';
 
@@ -87,6 +88,12 @@ const favoritesSlice = createSlice({
       })
       .addCase(removeFavorite.rejected, (state, action) => {
         state.pendingIds = state.pendingIds.filter((id) => id !== action.meta.arg);
+      })
+      // Al cerrar sesión no quedan los favoritos del usuario anterior
+      .addCase(logout, (state) => {
+        state.items = [];
+        state.status = 'idle';
+        state.error = null;
       });
   },
 });

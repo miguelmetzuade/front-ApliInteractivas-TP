@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFavorite, removeFavorite } from '../store/slices/favoriteSlice';
+import { selectIsAuthenticated } from '../store/slices/authSlice';
 import '../styles/products/ProductCard.css';
 import iconLike from '../assets/home/like.svg';
 import iconLikeFilled from '../assets/home/like-filled.svg';
@@ -15,7 +16,16 @@ const ProductCard = ({ product }) => {
   const [favoriteError, setFavoriteError] = useState('');
   const imagen = product.imagenUrl || product.imagen;
 
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const toggleFavorite = async () => {
+    // Los favoritos son del usuario logueado: sin sesión lo mandamos al login
+    if (!isAuthenticated) {
+      navigate('/login', { state: { from: location } });
+      return;
+    }
     setFavoriteError('');
     try {
       if (liked) {

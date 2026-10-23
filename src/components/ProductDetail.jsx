@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getJson } from '../services/api';
 import { addToCart } from '../store/slices/cartSlice';
+import { selectIsAuthenticated } from '../store/slices/authSlice';
 import '../styles/ui/Button.css';
 import '../styles/pages/ProductDetail.css';
 
@@ -23,7 +24,15 @@ const ProductDetail = () => {
   const adding = useSelector((state) => state.cart.pendingIds.includes(Number(id)));
   const [cartMessage, setCartMessage] = useState(null);
 
+  const location = useLocation();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+
   const handleAddToCart = async () => {
+    // El carrito es del usuario logueado: sin sesión lo mandamos al login y después vuelve acá
+    if (!isAuthenticated) {
+      navigate('/login', { state: { from: location } });
+      return;
+    }
     setCartMessage(null);
     try {
       await dispatch(addToCart({ productoId: product.id, cantidad: 1 })).unwrap();

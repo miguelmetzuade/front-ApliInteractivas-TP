@@ -1,6 +1,7 @@
-import { Link, NavLink } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectCartCount } from '../store/slices/cartSlice'
+import { logout, selectIsAuthenticated } from '../store/slices/authSlice'
 import '../styles/layout/Navbar.css'
 import logo from '../assets/home/logo.svg'
 import iconSearch from '../assets/home/icon-search.svg'
@@ -19,6 +20,15 @@ const LINKS = [
 
 function Navbar() {
   const cartCount = useSelector(selectCartCount)
+  const isAuthenticated = useSelector(selectIsAuthenticated)
+  const user = useSelector((state) => state.auth.user)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    dispatch(logout())
+    navigate('/')
+  }
 
   return (
     <header className="navbar">
@@ -52,7 +62,16 @@ function Navbar() {
             <img src={iconCart} alt="" />
             {cartCount > 0 && <span className="navbar-cart-count">{cartCount}</span>}
           </Link>
-          <Link to="/login" aria-label="Mi cuenta"><img src={iconUser} alt="" /></Link>
+          {/* Con sesión: nombre de usuario y botón para salir. Sin sesión: link al login */}
+          {isAuthenticated ? (
+            <div className="navbar-user">
+              <img src={iconUser} alt="" />
+              <span className="navbar-username">{user?.nombreUsuario || user?.nombre}</span>
+              <button type="button" className="navbar-logout" onClick={handleLogout}>Salir</button>
+            </div>
+          ) : (
+            <Link to="/login" aria-label="Iniciar sesión"><img src={iconUser} alt="" /></Link>
+          )}
         </div>
       </div>
     </header>
