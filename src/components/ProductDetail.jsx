@@ -99,6 +99,7 @@ const ProductDetail = () => {
   if (!product) return <div className="detail-status">No se encontró el producto</div>;
 
   const imagen = product.image_url || product.imagenUrl || product.imagen;
+
   const inStock = product.stock > 0;
   const vendedor = product.vendedor || 'Sin vendedor';
   const features = [
@@ -106,6 +107,8 @@ const ProductDetail = () => {
     { icon: iconStock, label: inStock ? 'In Stock' : 'Out of Stock', value: inStock ? `${product.stock} units` : 'Agotado' },
     { icon: iconVerify, label: 'Guaranteed', value: '1 year' },
   ];
+
+  const imageUrl = product.image_url || product.imagenUrl || product.imagen;
 
   return (
     <div className="detail-page">
@@ -128,8 +131,8 @@ const ProductDetail = () => {
           >
             <img src={liked ? iconLikeFilled : iconLike} alt="" />
           </button>
-          {imagen
-            ? <img src={imagen} alt={product.nombre} />
+          {imageUrl
+            ? <img src={imageUrl} alt={product.nombre} />
             : <span className="detail-image-placeholder">{product.nombre.charAt(0)}</span>}
         </div>
 
@@ -165,7 +168,7 @@ const ProductDetail = () => {
               onClick={handleAddToCart}
               disabled={adding || !inStock}
             >
-              {adding ? 'Agregando...' : 'Add to Cart'}
+              {adding ? 'Agregando...' : 'Agregar al carrito'}
             </button>
           </div>
           {cartMessage && (
@@ -200,7 +203,7 @@ const ProductDetail = () => {
 
       {related.length > 0 && (
         <section className="detail-related">
-          <h2>Related Products</h2>
+          <h2>Productos relacionados</h2>
           <ProductGrid products={related} />
         </section>
       )}

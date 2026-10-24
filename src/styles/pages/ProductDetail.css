@@ -29,11 +29,6 @@
   text-decoration: none;
 }
 
-/* El ícono del Figma es un chevron hacia abajo; en el breadcrumb se rota a la derecha */
-.detail-breadcrumbs img {
-  transform: rotate(-90deg);
-}
-
 .detail-breadcrumbs span {
   color: #000;
 }
