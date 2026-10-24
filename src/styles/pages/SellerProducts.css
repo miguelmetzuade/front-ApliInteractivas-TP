@@ -90,6 +90,16 @@
   opacity: 0.5;
 }
 
+.seller-stock .seller-product-deactivate {
+  border: 1px solid #dc2626;
+  background: #fff;
+  color: #b91c1c;
+}
+
+.seller-stock .seller-product-deactivate:hover:not(:disabled) {
+  background: #fef2f2;
+}
+
 .seller-product-error {
   flex-basis: 100%;
   font-size: 13px;

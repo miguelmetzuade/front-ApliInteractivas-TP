@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSellerProducts, updateProductStock } from '../store/slices/sellerSlice';
+import { deleteSellerProduct, fetchSellerProducts, updateProductStock } from '../store/slices/sellerSlice';
 import '../styles/pages/SellerProducts.css';
 
 const SellerProducts = () => {
@@ -20,6 +20,11 @@ const SellerProducts = () => {
   const saveStock = (productId, currentStock) => {
     const stock = Number(stockValues[productId] ?? currentStock ?? 0);
     dispatch(updateProductStock({ id: productId, stock }));
+  };
+
+  const deactivateProduct = (product) => {
+    const confirmed = window.confirm(`¿Quieres dar de baja "${product.nombre}"?`);
+    if (confirmed) dispatch(deleteSellerProduct(product.id));
   };
 
   if (status === 'loading' || status === 'idle') {
@@ -68,6 +73,14 @@ const SellerProducts = () => {
                     disabled={!isValid || isPending || parsedStock === product.stock}
                   >
                     {isPending ? 'Guardando...' : 'Guardar stock'}
+                  </button>
+                  <button
+                    type="button"
+                    className="seller-product-deactivate"
+                    onClick={() => deactivateProduct(product)}
+                    disabled={isPending}
+                  >
+                    {isPending ? 'Procesando...' : 'Dar de baja'}
                   </button>
                   {updateErrors[product.id] && (
                     <span className="seller-product-error" role="alert">

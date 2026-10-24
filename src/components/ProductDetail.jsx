@@ -98,7 +98,7 @@ const ProductDetail = () => {
   if (error) return <div className="detail-status error">Error: {error}</div>;
   if (!product) return <div className="detail-status">No se encontró el producto</div>;
 
-  const imagen = product.imagenUrl || product.imagen;
+  const imagen = product.image_url || product.imagenUrl || product.imagen;
   const inStock = product.stock > 0;
   const vendedor = product.vendedor || 'Sin vendedor';
   const features = [

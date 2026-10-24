@@ -14,7 +14,8 @@ const ProductCard = ({ product }) => {
   );
   const pending = useSelector((state) => state.favorites.pendingIds.includes(product.id));
   const [favoriteError, setFavoriteError] = useState('');
-  const imagen = product.imagenUrl || product.imagen;
+  const [imageError, setImageError] = useState(false);
+  const imagen = product.image_url || product.imagenUrl || product.imagen;
 
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const navigate = useNavigate();
@@ -56,8 +57,8 @@ const ProductCard = ({ product }) => {
 
       {/* Link de react-router: navega al detalle sin recargar la página */}
       <Link to={`/products/${product.id}`} className="producto-imagen">
-        {imagen
-          ? <img src={imagen} alt={product.nombre} />
+        {imagen && !imageError
+          ? <img src={imagen} alt={product.nombre} onError={() => setImageError(true)} />
           : <span className="producto-imagen-placeholder">{product.nombre.charAt(0)}</span>}
       </Link>
 

@@ -213,6 +213,10 @@ const ProductList = () => {
             <p className="product-list-count">
               Selected Products: <strong>{totalProductos}</strong>
             </p>
+            <Link to="/products/new" className="product-list-add-button">
+              <span aria-hidden="true">+</span>
+              Agregar Producto
+            </Link>
             <label className="product-list-sort">
               <span className="sr-only">Ordenar por</span>
               <select value={filters.orden} onChange={(e) => dispatch(setOrden(e.target.value))}>

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getJson, patchJson } from '../../services/api';
+import { deleteJson, getJson, patchJson } from '../../services/api';
 
 const errorMessage = (error) => error.message || 'Ocurrió un error inesperado';
 
@@ -19,6 +19,18 @@ export const updateProductStock = createAsyncThunk(
   async ({ id, stock }, { rejectWithValue }) => {
     try {
       return await patchJson(`/productos/${id}/stock`, { stock });
+    } catch (error) {
+      return rejectWithValue(errorMessage(error));
+    }
+  },
+);
+
+export const deleteSellerProduct = createAsyncThunk(
+  'seller/deleteProduct',
+  async (productId, { rejectWithValue }) => {
+    try {
+      await deleteJson(`/productos/${productId}`);
+      return productId;
     } catch (error) {
       return rejectWithValue(errorMessage(error));
     }
@@ -63,6 +75,22 @@ const sellerSlice = createSlice({
       })
       .addCase(updateProductStock.rejected, (state, action) => {
         const productId = action.meta.arg.id;
+        state.pendingIds = state.pendingIds.filter((id) => id !== productId);
+        state.updateErrors[productId] = action.payload || action.error.message;
+      })
+      .addCase(deleteSellerProduct.pending, (state, action) => {
+        const productId = action.meta.arg;
+        if (!state.pendingIds.includes(productId)) state.pendingIds.push(productId);
+        delete state.updateErrors[productId];
+      })
+      .addCase(deleteSellerProduct.fulfilled, (state, action) => {
+        const productId = action.payload;
+        state.pendingIds = state.pendingIds.filter((id) => id !== productId);
+        state.products = state.products.filter((product) => product.id !== productId);
+        delete state.updateErrors[productId];
+      })
+      .addCase(deleteSellerProduct.rejected, (state, action) => {
+        const productId = action.meta.arg;
         state.pendingIds = state.pendingIds.filter((id) => id !== productId);
         state.updateErrors[productId] = action.payload || action.error.message;
       });
