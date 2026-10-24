@@ -34,27 +34,27 @@ const ProductList = () => {
     fetchProducts();
   }, [categoriaId]);
 
-  // --- Manejo de estados de carga y error ---
-  // Si 'loading' es true, se muestra un mensaje de carga mientras se esperan los datos de la API.
-  if (loading) return <div className="product-list-status">Cargando productos...</div>;
-
-  // Si 'error' tiene un valor (no es null), la petición falló y se informa al usuario.
-  if (error) return <div className="product-list-status error">Error: {error}</div>;
-
   return (
     <div className="product-list-container">
-      {/* operador lógico &&: el título (nombre de la categoría) solo aparece si hay un filtro aplicado */}
-      {categoriaId && products[0]?.categoriaNombre && (
-        <h2 className="product-list-title">{products[0].categoriaNombre}</h2>
-      )}
+      <div className="product-list-header">
+        {categoriaId && products[0]?.categoriaNombre && (
+          <h2 className="product-list-title">{products[0].categoriaNombre}</h2>
+        )}
+        <Link to="/products/new" className="product-list-add-button">
+          <span aria-hidden="true">+</span>
+          Agregar Producto
+        </Link>
+      </div>
 
-      {/* operador lógico &&: el link solo aparece si hay un filtro aplicado */}
       {categoriaId && (
         <Link to="/products" className="product-list-clear">← Ver todos los productos</Link>
       )}
 
-      {/* Renderizado condicional: operador ternario */}
-      {products.length === 0 ? (
+      {loading ? (
+        <p className="product-list-status">Cargando productos...</p>
+      ) : error ? (
+        <p className="product-list-status error">Error: {error}</p>
+      ) : products.length === 0 ? (
         <p className="product-list-status">No hay productos disponibles</p>
       ) : (
         <div className="products-grid">

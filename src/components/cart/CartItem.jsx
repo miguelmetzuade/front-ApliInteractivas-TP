@@ -11,7 +11,7 @@ import '../../styles/cart/CartItem.css';
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
   const pending = useSelector((state) => state.cart.pendingIds.includes(item.productoId));
-  const imagen = item.imagenUrl || item.imagen;
+  const imagen = item.image_url || item.imagenUrl || item.imagen;
   const sinStockSuficiente = item.cantidad > item.stockDisponible;
 
   const changeQuantity = (cantidad) => {

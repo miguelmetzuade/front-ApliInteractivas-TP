@@ -108,7 +108,7 @@ const PaymentStep = () => {
 
         <ul className="payment-products">
           {items.map((item) => {
-            const imagen = item.imagenUrl || item.imagen;
+            const imagen = item.image_url || item.imagenUrl || item.imagen;
             return (
               <li key={item.productoId} className="payment-product">
                 {imagen
