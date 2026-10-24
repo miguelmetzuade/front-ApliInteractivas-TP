@@ -28,8 +28,9 @@ const Home = () => {
     const fetchData = async () => {
       try {
         // Pedimos productos y categorías en paralelo
-        const [prods, cats] = await Promise.all([getJson('/productos'), getJson('/categorias')]);
-        setProductos(prods);
+        const [prods, cats] = await Promise.all([getJson('/productos?tamanio=100'), getJson('/categorias')]);
+        // GET /productos ahora devuelve { productos, totalProductos, ... }
+        setProductos(prods.productos);
         setCategorias(cats);
       } catch (err) {
         setError(err.message);

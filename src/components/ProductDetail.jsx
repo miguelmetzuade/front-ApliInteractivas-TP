@@ -89,8 +89,8 @@ const ProductDetail = () => {
   // Productos relacionados: misma categoría, sin el actual
   useEffect(() => {
     if (!product?.categoriaId) return;
-    getJson(`/productos?categoriaId=${product.categoriaId}`)
-      .then((data) => setRelated(data.filter((p) => p.id !== product.id).slice(0, 4)))
+    getJson(`/productos?categoriaId=${product.categoriaId}&tamanio=5`)
+      .then((data) => setRelated(data.productos.filter((p) => p.id !== product.id).slice(0, 4)))
       .catch(() => setRelated([]));
   }, [product]);
 
