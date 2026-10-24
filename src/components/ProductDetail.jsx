@@ -98,8 +98,7 @@ const ProductDetail = () => {
   if (error) return <div className="detail-status error">Error: {error}</div>;
   if (!product) return <div className="detail-status">No se encontró el producto</div>;
 
-<<<<<<< Updated upstream
-  const imagen = product.imagenUrl || product.imagen;
+
   const inStock = product.stock > 0;
   const vendedor = product.vendedor || 'Sin vendedor';
   const features = [
@@ -107,9 +106,8 @@ const ProductDetail = () => {
     { icon: iconStock, label: inStock ? 'In Stock' : 'Out of Stock', value: inStock ? `${product.stock} units` : 'Agotado' },
     { icon: iconVerify, label: 'Guaranteed', value: '1 year' },
   ];
-=======
+
   const imageUrl = product.image_url || product.imagenUrl || product.imagen;
->>>>>>> Stashed changes
 
   return (
     <div className="detail-page">
@@ -121,37 +119,8 @@ const ProductDetail = () => {
         <span aria-current="page">{product.nombre}</span>
       </nav>
 
-<<<<<<< Updated upstream
       <section className="detail-main">
         <div className="detail-image">
-=======
-      <div className="detail-card">
-        {imageUrl && (
-          <img className="detail-image" src={imageUrl} alt={product.nombre} />
-        )}
-        <Link to={`/products?categoriaId=${product.categoriaId}`} className="detail-categoria">
-          {product.categoriaNombre}
-        </Link>
-
-        <h1 className="detail-nombre">{product.nombre}</h1>
-        <p className="detail-descripcion">{product.descripcion}</p>
-
-        <p className="detail-precio">${product.precio.toLocaleString('es-AR')}</p>
-
-        <ul className="detail-datos">
-          <li>
-            <strong>Stock:</strong>{' '}
-            <span className={product.stock > 0 ? 'en-stock' : 'sin-stock'}>
-              {product.stock > 0 ? product.stock : 'Agotado'}
-            </span>
-          </li>
-          <li><strong>Disponible:</strong> {product.disponible ? 'Sí' : 'No'}</li>
-          {/* operador ||: si el producto no tiene vendedor mostramos un texto alternativo */}
-          <li><strong>Vendedor:</strong> {product.vendedor || 'Sin vendedor'}</li>
-        </ul>
-
-        <div className="detail-cart">
->>>>>>> Stashed changes
           <button
             type="button"
             className="btn-like detail-like"
@@ -161,8 +130,8 @@ const ProductDetail = () => {
           >
             <img src={liked ? iconLikeFilled : iconLike} alt="" />
           </button>
-          {imagen
-            ? <img src={imagen} alt={product.nombre} />
+          {imageUrl
+            ? <img src={imageUrl} alt={product.nombre} />
             : <span className="detail-image-placeholder">{product.nombre.charAt(0)}</span>}
         </div>
 
@@ -198,7 +167,7 @@ const ProductDetail = () => {
               onClick={handleAddToCart}
               disabled={adding || !inStock}
             >
-              {adding ? 'Agregando...' : 'Add to Cart'}
+              {adding ? 'Agregando...' : 'Agregar al carrito'}
             </button>
           </div>
           {cartMessage && (
@@ -233,7 +202,7 @@ const ProductDetail = () => {
 
       {related.length > 0 && (
         <section className="detail-related">
-          <h2>Related Products</h2>
+          <h2>Productos relacionados</h2>
           <ProductGrid products={related} />
         </section>
       )}
