@@ -40,7 +40,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<ProductList />} />
-        <Route path="/products/new" element={<CrudProduct />} />
         <Route path="/products/:id" element={<ProductDetail />} />
         {/* <Route path="/categories" element={<CategoryList />} /> */}
         <Route path="/login" element={<Login />} />
@@ -49,6 +48,7 @@ function App() {
         {/* Rutas que requieren login: el backend las protege con el JWT */}
         <Route element={<ProtectedRoute />}>
           <Route path="/favorites" element={<Favorites />} />
+          <Route path="/products/new" element={<CrudProduct />} />
           <Route path="/seller" element={<SellerProducts />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
