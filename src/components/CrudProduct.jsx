@@ -133,7 +133,8 @@ const CrudProduct = () => {
               placeholder="Describe las características del producto"
               rows={4}
               required
-              maxLength={1000}
+              // La columna description en la base es varchar(255): se deja margen
+              maxLength={240}
             />
           </label>
 
