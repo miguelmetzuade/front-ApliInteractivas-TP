@@ -5,6 +5,8 @@ export const API_URL = 'http://localhost:8080/api';
 // Centraliza las opciones de fetch para no repetirlas en cada componente.
 const requestJson = async (endpoint, options = {}) => {
   const token = localStorage.getItem('token');
+  // Los archivos (ej: imagen de producto) viajan como multipart en un FormData
+  const esFormData = options.body instanceof FormData;
 
   const response = await fetch(`${API_URL}${endpoint}`, {
     // Especificamos el método HTTP a utilizar
@@ -14,8 +16,9 @@ const requestJson = async (endpoint, options = {}) => {
       // Indica al servidor que esperamos recibir JSON como respuesta
       'Accept': 'application/json',
 
-      // Indica al servidor que estamos enviando datos en formato JSON
-      'Content-Type': 'application/json',
+      // Indica al servidor que estamos enviando datos en formato JSON.
+      // Con FormData no se define: el navegador arma el multipart/form-data con su boundary
+      ...(!esFormData && { 'Content-Type': 'application/json' }),
 
       // Envía el token JWT solo si existe en localStorage (necesario para rutas protegidas).
       // El JwtFilter del backend espera el formato "Bearer <token>"
@@ -24,7 +27,7 @@ const requestJson = async (endpoint, options = {}) => {
 
     // Permite el envío de cookies y credenciales de autenticación
     // Esto es necesario porque en el backend tenemos configuration.setAllowCredentials(true)
-    body: options.body === undefined ? undefined : JSON.stringify(options.body),
+    body: options.body === undefined || esFormData ? options.body : JSON.stringify(options.body),
     credentials: 'include',
 
     // Especifica que esta es una petición CORS (Cross-Origin Resource Sharing)
@@ -57,6 +60,8 @@ const requestJson = async (endpoint, options = {}) => {
 
 export const getJson = (endpoint) => requestJson(endpoint);
 export const postJson = (endpoint, body) => requestJson(endpoint, { method: 'POST', body });
+// Envía un FormData (multipart/form-data), por ejemplo para subir archivos
+export const postFormData = (endpoint, formData) => requestJson(endpoint, { method: 'POST', body: formData });
 export const putJson = (endpoint, body) => requestJson(endpoint, { method: 'PUT', body });
 export const patchJson = (endpoint, body) => requestJson(endpoint, { method: 'PATCH', body });
 export const deleteJson = (endpoint) => requestJson(endpoint, { method: 'DELETE' });

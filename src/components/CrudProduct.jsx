@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getJson, postJson } from '../services/api';
+import { getJson, postFormData, postJson } from '../services/api';
 import '../styles/pages/CrudProduct.css';
+
+// Mismos límites que valida el backend (POST /api/productos/imagen)
+const TIPOS_IMAGEN = ['image/jpeg', 'image/png', 'image/webp'];
+const TAMANIO_MAXIMO_IMAGEN = 5 * 1024 * 1024;
 
 const INITIAL_PRODUCT = {
   nombre: 'Teclado mecánico',
@@ -19,6 +23,15 @@ const CrudProduct = () => {
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  // La imagen se puede subir como archivo o indicar con una URL externa
+  const [imageMode, setImageMode] = useState('file');
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
+
+  // Libera la URL temporal de la vista previa cuando cambia el archivo o se sale de la página
+  useEffect(() => () => {
+    if (imagePreview) URL.revokeObjectURL(imagePreview);
+  }, [imagePreview]);
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -39,19 +52,47 @@ const CrudProduct = () => {
     setProduct((current) => ({ ...current, [name]: value }));
   };
 
+  const handleFileChange = (event) => {
+    const file = event.target.files[0] ?? null;
+    let validationError = '';
+    if (file && !TIPOS_IMAGEN.includes(file.type)) {
+      validationError = 'Formato de imagen no soportado. Use JPG, PNG o WEBP.';
+    } else if (file && file.size > TAMANIO_MAXIMO_IMAGEN) {
+      validationError = 'La imagen supera el tamaño máximo permitido (5 MB).';
+    }
+    setError(validationError);
+    if (validationError) event.target.value = '';
+    // Un archivo inválido descarta también el que estaba elegido antes
+    const validFile = validationError ? null : file;
+    setImageFile(validFile);
+    setImagePreview(validFile ? URL.createObjectURL(validFile) : '');
+  };
+
+  // Paso 1: si hay un archivo, se sube y el backend devuelve la URL con la que queda publicado
+  const resolveImageUrl = async () => {
+    if (imageMode === 'url') return product.image_url.trim();
+    if (!imageFile) return '';
+    const formData = new FormData();
+    formData.append('imagen', imageFile);
+    const { image_url: imageUrl } = await postFormData('/productos/imagen', formData);
+    return imageUrl;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitting(true);
     setError('');
 
     try {
+      const imageUrl = await resolveImageUrl();
+      // Paso 2: alta del producto con la URL de la imagen
       await postJson('/productos', {
         nombre: product.nombre.trim(),
         descripcion: product.descripcion.trim(),
         precio: Number(product.precio),
         stock: Number(product.stock),
         categoriaId: Number(product.categoriaId),
-        image_url: product.image_url.trim(),
+        image_url: imageUrl,
       });
       navigate('/seller');
     } catch (requestError) {
@@ -96,16 +137,52 @@ const CrudProduct = () => {
             />
           </label>
 
-          <label className="crud-product-field">
-            <span>URL de la imagen</span>
-            <input
-              name="image_url"
-              type="url"
-              value={product.image_url}
-              onChange={handleChange}
-              placeholder="https://ejemplo.com/imagen.jpg"
-            />
-          </label>
+          <div className="crud-product-field">
+            <span>Imagen</span>
+            <div className="crud-product-image-modes" role="group" aria-label="Origen de la imagen">
+              <button
+                type="button"
+                className={imageMode === 'file' ? 'is-active' : ''}
+                aria-pressed={imageMode === 'file'}
+                onClick={() => setImageMode('file')}
+              >
+                Subir archivo
+              </button>
+              <button
+                type="button"
+                className={imageMode === 'url' ? 'is-active' : ''}
+                aria-pressed={imageMode === 'url'}
+                onClick={() => setImageMode('url')}
+              >
+                Usar URL
+              </button>
+            </div>
+
+            {imageMode === 'file' ? (
+              <>
+                <input
+                  name="imagen"
+                  type="file"
+                  accept={TIPOS_IMAGEN.join(',')}
+                  onChange={handleFileChange}
+                  aria-label="Archivo de imagen"
+                />
+                <small className="crud-product-hint">JPG, PNG o WEBP, hasta 5 MB.</small>
+                {imagePreview && (
+                  <img className="crud-product-image-preview" src={imagePreview} alt="Vista previa de la imagen" />
+                )}
+              </>
+            ) : (
+              <input
+                name="image_url"
+                type="url"
+                value={product.image_url}
+                onChange={handleChange}
+                placeholder="https://ejemplo.com/imagen.jpg"
+                aria-label="URL de la imagen"
+              />
+            )}
+          </div>
 
           <div className="crud-product-fields-row">
             <label className="crud-product-field">
