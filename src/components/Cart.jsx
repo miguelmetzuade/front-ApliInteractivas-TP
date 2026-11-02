@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearCart, fetchCart } from '../store/slices/cartSlice';
+import { addToCart, clearCart, fetchCart } from '../store/slices/cartSlice';
 import CartItem from './cart/CartItem';
 import OrderSummary from './cart/OrderSummary';
 import StatusMessage from './ui/StatusMessage';
@@ -46,7 +46,13 @@ const Cart = () => {
             </div>
           ) : (
             <ul className="cart-items">
-              {items.map((item) => <CartItem key={item.productoId} item={item} />)}
+              {items.map((item) => (
+                <CartItem
+                  key={item.productoId}
+                  item={item}
+                  onAdd={() => dispatch(addToCart({ productoId: item.productoId, cantidad: 1 }))}
+                />
+              ))}
             </ul>
           )}
         </section>

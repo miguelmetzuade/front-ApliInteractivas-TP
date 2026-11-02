@@ -8,7 +8,7 @@ import iconClose from '../../assets/cart/icon-close.svg';
 import '../../styles/cart/CartItem.css';
 
 // Renglón del carrito ("Cart Product" del Figma): imagen, nombre, contador, subtotal y botón para sacarlo
-const CartItem = ({ item }) => {
+const CartItem = ({ item, onAdd }) => {
   const dispatch = useDispatch();
   const pending = useSelector((state) => state.cart.pendingIds.includes(item.productoId));
   const imagen = item.image_url || item.imagenUrl || item.imagen;
@@ -51,7 +51,7 @@ const CartItem = ({ item }) => {
               type="button"
               className="cart-icon-button"
               aria-label="Sumar una unidad"
-              onClick={() => changeQuantity(item.cantidad + 1)}
+              onClick={onAdd}
               disabled={pending || item.cantidad >= item.stockDisponible}
             >
               <img src={iconPlus} alt="" />
