@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCartCount } from '../store/slices/cartSlice'
 import { logout, selectIsAuthenticated } from '../store/slices/authSlice'
+import { setBusqueda } from '../store/slices/productsSlice'
 import '../styles/layout/Navbar.css'
 import logo from '../assets/home/logo.svg'
 import iconSearch from '../assets/home/icon-search.svg'
@@ -28,6 +29,9 @@ function Navbar() {
 
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef(null)
+  // Texto que escribe el usuario; se envía al store recién al apretar Enter
+  const busquedaActual = useSelector((state) => state.products.filters.busqueda)
+  const [searchText, setSearchText] = useState(busquedaActual)
 
   // Cierra el menú al hacer click afuera
   useEffect(() => {
@@ -44,6 +48,14 @@ function Navbar() {
     navigate('/')
   }
 
+  // Al buscar guardamos el texto en los filtros de productsSlice y vamos al catálogo:
+  // ProductList vuelve a pedir GET /productos?busqueda=... porque cambiaron los filtros
+  const handleSearch = (e) => {
+    e.preventDefault()
+    dispatch(setBusqueda(searchText.trim()))
+    navigate('/products')
+  }
+
   return (
     <header className="navbar">
       <div className="navbar-container">
@@ -51,11 +63,17 @@ function Navbar() {
           <img src={logo} alt="cyber" />
         </Link>
 
-        {/* Por ahora el buscador es solo visual: falta el endpoint de búsqueda */}
-        <label className="navbar-search">
+        {/* Buscador: con Enter filtra el catálogo por nombre (vacío = sin filtro) */}
+        <form className="navbar-search" role="search" onSubmit={handleSearch}>
           <img src={iconSearch} alt="" />
-          <input type="search" placeholder="Buscar" />
-        </label>
+          <input
+            type="search"
+            placeholder="Buscar"
+            aria-label="Buscar productos"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </form>
 
         <nav>
           <ul className="nav-menu">

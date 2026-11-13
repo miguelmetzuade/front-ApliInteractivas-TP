@@ -82,6 +82,8 @@ const productsSlice = createSlice({
     setPrecio: (state, action) => withFilter(state, action.payload),
     setSoloConStock: (state, action) => withFilter(state, { soloConStock: action.payload }),
     setOrden: (state, action) => withFilter(state, { orden: action.payload }),
+    // Texto del buscador del Navbar: el backend lo busca en el nombre del producto (?busqueda=)
+    setBusqueda: (state, action) => withFilter(state, { busqueda: action.payload }),
     setPagina: (state, action) => {
       state.filters.pagina = action.payload;
     },
@@ -128,6 +130,7 @@ export const {
   setPrecio,
   setSoloConStock,
   setOrden,
+  setBusqueda,
   setPagina,
   resetFilters,
 } = productsSlice.actions;
