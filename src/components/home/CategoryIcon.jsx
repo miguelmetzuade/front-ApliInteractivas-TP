@@ -10,6 +10,11 @@ import catCameras from '../../assets/home/cat-cameras.svg';
 import catHeadphones from '../../assets/home/cat-headphones.svg';
 import catComputers from '../../assets/home/cat-computers.svg';
 import catGaming from '../../assets/home/cat-gaming.svg';
+import catGpu from '../../assets/home/cat-gpu.svg';
+import catCpu from '../../assets/home/cat-cpu.svg';
+import catRam from '../../assets/home/cat-ram.svg';
+import catStorage from '../../assets/home/cat-storage.svg';
+import catPeripherals from '../../assets/home/cat-peripherals.svg';
 import '../../styles/home/CategoryIcon.css';
 
 // El ícono de smartwatch del diseño está armado con varias piezas superpuestas
@@ -27,19 +32,30 @@ const SmartWatchIcon = () => (
   </div>
 );
 
-// Elegimos el ícono según palabras clave del nombre de la categoría que viene del backend
+// Elegimos el ícono según palabras clave del nombre de la categoría que viene del backend.
+// Las claves van sin tildes: el nombre se normaliza antes de comparar.
+// Primero las categorías de hardware del catálogo; el orden importa (gana la primera que coincide).
 const ICONOS_CATEGORIA = [
-  { claves: ['celu', 'phone', 'telef', 'móvil', 'movil'], icono: catPhones },
+  { claves: ['placa', 'video', 'grafic', 'gpu'], icono: catGpu },
+  { claves: ['procesador', 'cpu'], icono: catCpu },
+  { claves: ['memoria', 'ram'], icono: catRam },
+  { claves: ['almacen', 'disco', 'ssd', 'hdd'], icono: catStorage },
+  { claves: ['perif', 'teclado', 'mouse'], icono: catPeripherals },
+  { claves: ['monitor', 'pantalla'], icono: catComputers },
+  { claves: ['celu', 'phone', 'telef', 'movil'], icono: catPhones },
   { claves: ['reloj', 'watch'], icono: 'watch' },
-  { claves: ['cámara', 'camara', 'camera', 'foto'], icono: catCameras },
+  { claves: ['camara', 'camera', 'foto'], icono: catCameras },
   { claves: ['auricular', 'headphone', 'audio', 'sonido'], icono: catHeadphones },
   { claves: ['compu', 'notebook', 'laptop', 'pc', 'computer'], icono: catComputers },
   { claves: ['juego', 'gaming', 'consola', 'game'], icono: catGaming },
 ];
-const ICONOS_POR_DEFECTO = [catPhones, 'watch', catCameras, catHeadphones, catComputers, catGaming];
+const ICONOS_POR_DEFECTO = [catGpu, catCpu, catRam, catStorage, catPeripherals, catComputers];
+
+// "Periféricos" -> "perifericos": minúsculas y sin tildes
+const normalizar = (texto) => texto.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 
 const iconoDeCategoria = (nombre, index) => {
-  const n = nombre.toLowerCase();
+  const n = normalizar(nombre);
   const match = ICONOS_CATEGORIA.find(({ claves }) => claves.some((c) => n.includes(c)));
   return match ? match.icono : ICONOS_POR_DEFECTO[index % ICONOS_POR_DEFECTO.length];
 };
