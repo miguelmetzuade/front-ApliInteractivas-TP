@@ -119,3 +119,20 @@
     flex-wrap: wrap;
   }
 }
+
+/* Detalle de un producto propio (SellerProductDetail) */
+.seller-detail-badge {
+  align-self: flex-start;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #f6f6f6;
+  color: #6c6c6c;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.seller-detail-back {
+  align-self: flex-start;
+  color: #000;
+  font-weight: 500;
+}

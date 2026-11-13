@@ -10,6 +10,7 @@ import Home from './components/Home'
 import Footer from './components/Footer'
 import Favorites from './components/Favorites'
 import SellerProducts from './components/SellerProducts'
+import SellerProductDetail from './components/SellerProductDetail'
 import CrudProduct from './components/CrudProduct'
 import Cart from './components/Cart'
 import Checkout from './components/Checkout'
@@ -50,6 +51,7 @@ function App() {
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/products/new" element={<CrudProduct />} />
           <Route path="/seller" element={<SellerProducts />} />
+          <Route path="/seller/products/:id" element={<SellerProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
         </Route>

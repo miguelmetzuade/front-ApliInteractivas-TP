@@ -51,7 +51,7 @@ const SellerProducts = () => {
             return (
               <article className="seller-product" key={product.id}>
                 <div className="seller-product-info">
-                  <Link to={`/products/${product.id}`} className="seller-product-name">
+                  <Link to={`/seller/products/${product.id}`} className="seller-product-name">
                     {product.nombre}
                   </Link>
                   <span>{product.categoriaNombre || 'Sin categoría'}</span>
