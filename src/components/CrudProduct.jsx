@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { getJson, postFormData, postJson } from '../services/api';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { getJson, postFormData, postJson, putJson } from '../services/api';
 import '../styles/pages/CrudProduct.css';
 
 // Mismos límites que valida el backend (POST /api/productos/imagen)
@@ -17,9 +17,17 @@ const INITIAL_PRODUCT = {
   image_url: '',
 };
 
+// Formulario de alta y de edición de productos.
+// - /products/new                -> alta (POST /api/productos)
+// - /seller/products/:id/edit    -> edición de un producto propio (PUT /api/productos/{id})
 const CrudProduct = () => {
   const navigate = useNavigate();
+  // useParams lee el :id de la URL. Si existe, el formulario está en modo edición
+  const { id } = useParams();
+  const esEdicion = Boolean(id);
   const [product, setProduct] = useState(INITIAL_PRODUCT);
+  // Resultado de cargar el producto a editar: guarda de qué id es (si no coincide con el de la URL, está cargando)
+  const [cargaProducto, setCargaProducto] = useState({ id: null, error: null });
   const [categories, setCategories] = useState([]);
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -48,6 +56,28 @@ const CrudProduct = () => {
     loadCategories();
   }, []);
 
+  // Solo en edición: trae el producto y completa el formulario. Se vuelve a ejecutar si cambia el id.
+  // GET /productos/mios/{id} responde 404 si el producto no es del usuario logueado.
+  useEffect(() => {
+    if (!id) return;
+    getJson(`/productos/mios/${id}`)
+      .then((data) => {
+        // Los inputs controlados trabajan con strings
+        setProduct({
+          nombre: data.nombre,
+          descripcion: data.descripcion ?? '',
+          precio: String(data.precio),
+          stock: String(data.stock),
+          categoriaId: String(data.categoriaId),
+          image_url: data.image_url ?? '',
+        });
+        setCargaProducto({ id, error: null });
+      })
+      .catch((requestError) => setCargaProducto({ id, error: requestError.message }));
+  }, [id]);
+
+  const cargandoProducto = esEdicion && cargaProducto.id !== id;
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setProduct((current) => ({ ...current, [name]: value }));
@@ -69,10 +99,11 @@ const CrudProduct = () => {
     setImagePreview(validFile ? URL.createObjectURL(validFile) : '');
   };
 
-  // Paso 1: si hay un archivo, se sube y el backend devuelve la URL con la que queda publicado
+  // Paso 1: si hay un archivo, se sube y el backend devuelve la URL con la que queda publicado.
+  // Sin archivo nuevo se mantiene la imagen que ya tenía (en el alta es '', o sea sin imagen)
   const resolveImageUrl = async () => {
     if (imageMode === 'url') return product.image_url.trim();
-    if (!imageFile) return '';
+    if (!imageFile) return product.image_url;
     const formData = new FormData();
     formData.append('imagen', imageFile);
     const { image_url: imageUrl } = await postFormData('/productos/imagen', formData);
@@ -86,30 +117,56 @@ const CrudProduct = () => {
 
     try {
       const imageUrl = await resolveImageUrl();
-      // Paso 2: alta del producto con la URL de la imagen
-      await postJson('/productos', {
+      const body = {
         nombre: product.nombre.trim(),
         descripcion: product.descripcion.trim(),
         precio: Number(product.precio),
         stock: Number(product.stock),
         categoriaId: Number(product.categoriaId),
         image_url: imageUrl,
-      });
-      navigate('/seller');
+      };
+      // Paso 2: modificación (PUT) o alta (POST) del producto con la URL de la imagen
+      if (esEdicion) {
+        await putJson(`/productos/${id}`, body);
+        navigate(`/seller/products/${id}`);
+      } else {
+        await postJson('/productos', body);
+        navigate('/seller');
+      }
     } catch (requestError) {
-      setError(requestError.message || 'No se pudo crear el producto.');
+      setError(requestError.message || 'No se pudo guardar el producto.');
     } finally {
       setSubmitting(false);
     }
   };
+
+  // En edición, mientras llega el producto o si no se pudo cargar, no se muestra el formulario
+  if (cargandoProducto) {
+    return <main className="crud-product-page"><p className="crud-product-hint">Cargando producto...</p></main>;
+  }
+  if (esEdicion && cargaProducto.error) {
+    return (
+      <main className="crud-product-page">
+        <p className="crud-product-error" role="alert">No se pudo cargar el producto: {cargaProducto.error}</p>
+        <Link className="crud-product-cancel" to="/seller">Volver a Mis productos</Link>
+      </main>
+    );
+  }
+
+  // Imagen a mostrar: la nueva elegida o, si no hay, la que ya tiene el producto
+  const vistaPrevia = imagePreview || product.image_url;
 
   return (
     <main className="crud-product-page">
       <section className="crud-product-card">
         <div className="crud-product-heading">
           <span className="crud-product-eyebrow">Catálogo</span>
-          <h1>Agregar producto</h1>
-          <p>Completa los datos para publicar un nuevo producto.</p>
+          <h1>{esEdicion ? 'Editar producto' : 'Agregar producto'}</h1>
+          <p>
+            {esEdicion
+              ? 'Modificá los datos de tu publicación y guardá los cambios.'
+              : 'Completa los datos para publicar un nuevo producto.'}
+          </p>
         </div>
 
         <form className="crud-product-form" onSubmit={handleSubmit}>
@@ -170,8 +227,8 @@ const CrudProduct = () => {
                   aria-label="Archivo de imagen"
                 />
                 <small className="crud-product-hint">JPG, PNG o WEBP, hasta 5 MB.</small>
-                {imagePreview && (
-                  <img className="crud-product-image-preview" src={imagePreview} alt="Vista previa de la imagen" />
+                {vistaPrevia && (
+                  <img className="crud-product-image-preview" src={vistaPrevia} alt="Vista previa de la imagen" />
                 )}
               </>
             ) : (
@@ -236,9 +293,9 @@ const CrudProduct = () => {
           {error && <p className="crud-product-error" role="alert">{error}</p>}
 
           <div className="crud-product-actions">
-            <Link className="crud-product-cancel" to="/products">Cancelar</Link>
+            <Link className="crud-product-cancel" to={esEdicion ? `/seller/products/${id}` : '/products'}>Cancelar</Link>
             <button className="crud-product-submit" type="submit" disabled={submitting || loadingCategories || categories.length === 0}>
-              {submitting ? 'Guardando…' : 'Aceptar'}
+              {submitting ? 'Guardando…' : esEdicion ? 'Guardar cambios' : 'Aceptar'}
             </button>
           </div>
         </form>

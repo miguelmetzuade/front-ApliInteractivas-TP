@@ -74,6 +74,10 @@ const SellerProducts = () => {
                   >
                     {isPending ? 'Guardando...' : 'Guardar stock'}
                   </button>
+                  {/* Abre el mismo formulario del alta, en modo edición */}
+                  <Link to={`/seller/products/${product.id}/edit`} className="seller-product-edit">
+                    Editar
+                  </Link>
                   <button
                     type="button"
                     className="seller-product-deactivate"

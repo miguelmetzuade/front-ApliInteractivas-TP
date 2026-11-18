@@ -76,6 +76,7 @@ const SellerProductDetail = () => {
 
           <p className="detail-descripcion">{product.descripcion}</p>
 
+          <Link to={`/seller/products/${product.id}/edit`} className="seller-product-edit">Editar producto</Link>
           <Link to="/seller" className="seller-detail-back">Volver a Mis productos</Link>
         </div>
       </section>

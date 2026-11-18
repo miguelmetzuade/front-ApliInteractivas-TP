@@ -100,6 +100,22 @@
   background: #fef2f2;
 }
 
+/* Link "Editar": misma forma que los botones de la fila, con borde negro */
+.seller-product-edit {
+  align-self: flex-start;
+  padding: 10px 14px;
+  border: 1px solid #000;
+  border-radius: 6px;
+  background: #fff;
+  color: #000;
+  font: inherit;
+  text-decoration: none;
+}
+
+.seller-product-edit:hover {
+  background: #f5f5f5;
+}
+
 .seller-product-error {
   flex-basis: 100%;
   font-size: 13px;

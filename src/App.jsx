@@ -53,9 +53,12 @@ function App() {
         {/* Rutas que requieren login: el backend las protege con el JWT */}
         <Route element={<ProtectedRoute />}>
           <Route path="/favorites" element={<Favorites />} />
-          <Route path="/products/new" element={<CrudProduct />} />
+          {/* key distinta en alta y edición: al pasar de una a otra React crea el formulario de cero */}
+          <Route path="/products/new" element={<CrudProduct key="alta" />} />
           <Route path="/seller" element={<SellerProducts />} />
           <Route path="/seller/products/:id" element={<SellerProductDetail />} />
+          {/* Mismo formulario que el alta: con :id en la URL, CrudProduct carga el producto y lo modifica */}
+          <Route path="/seller/products/:id/edit" element={<CrudProduct key="edicion" />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
         </Route>
