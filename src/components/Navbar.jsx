@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCartCount } from '../store/slices/cartSlice'
 import { logout, selectIsAuthenticated } from '../store/slices/authSlice'
-import { setBusqueda } from '../store/slices/productsSlice'
 import '../styles/layout/Navbar.css'
 import logo from '../assets/home/logo.svg'
 import iconSearch from '../assets/home/icon-search.svg'
@@ -26,12 +25,15 @@ function Navbar() {
   const user = useSelector((state) => state.auth.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef(null)
-  // Texto que escribe el usuario; se envía al store recién al apretar Enter
-  const busquedaActual = useSelector((state) => state.products.filters.busqueda)
-  const [searchText, setSearchText] = useState(busquedaActual)
+  // Búsqueda que está en la URL (/products?busqueda=...). El input arranca con ese texto y,
+  // como su key es la búsqueda, se vuelve a crear cuando cambia la URL (ej: al ir Atrás)
+  const busquedaUrl = location.pathname === '/products'
+    ? new URLSearchParams(location.search).get('busqueda') ?? ''
+    : ''
 
   // Cierra el menú al hacer click afuera
   useEffect(() => {
@@ -50,12 +52,12 @@ function Navbar() {
     dispatch(logout())
   }
 
-  // Al buscar guardamos el texto en los filtros de productsSlice y vamos al catálogo:
-  // ProductList vuelve a pedir GET /productos?busqueda=... porque cambiaron los filtros
+  // Al buscar vamos al catálogo con el texto en la URL (/products?busqueda=...): cada búsqueda queda
+  // en el historial, así el botón Atrás la deshace. ProductList lee la URL y pide GET /productos?busqueda=...
   const handleSearch = (e) => {
     e.preventDefault()
-    dispatch(setBusqueda(searchText.trim()))
-    navigate('/products')
+    const texto = new FormData(e.currentTarget).get('busqueda').trim()
+    navigate(texto ? `/products?busqueda=${encodeURIComponent(texto)}` : '/products')
   }
 
   return (
@@ -69,11 +71,12 @@ function Navbar() {
         <form className="navbar-search" role="search" onSubmit={handleSearch}>
           <img src={iconSearch} alt="" />
           <input
+            key={busquedaUrl}
+            name="busqueda"
             type="search"
             placeholder="Buscar"
             aria-label="Buscar productos"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
+            defaultValue={busquedaUrl}
           />
         </form>
 

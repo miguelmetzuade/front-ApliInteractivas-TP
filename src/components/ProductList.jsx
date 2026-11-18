@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  aplicarFiltrosDeUrl,
   fetchFacets,
   fetchProducts,
+  initialFilters,
   setCategorias,
   setVendedores,
   setPrecio,
@@ -67,25 +69,43 @@ const ProductList = () => {
     (state) => state.products,
   );
 
-  // useSearchParams lee los query params de la URL. Ej: /products?categoriaId=1
+  // useSearchParams lee los query params de la URL. Ej: /products?busqueda=rtx&categoriaId=1
   const [searchParams] = useSearchParams();
-  const categoriaId = searchParams.get('categoriaId');
+  const busquedaUrl = searchParams.get('busqueda') ?? '';
+  const categoriaUrl = searchParams.get('categoriaId');
+  // location.key cambia en cada navegación (link, Atrás, buscar), aunque la URL sea la misma
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [categorySearch, setCategorySearch] = useState('');
   const [open, setOpen] = useState({ category: true, seller: false, price: false, availability: false });
   // Los precios se escriben en estado local y se envían al store con un pequeño retraso
   const [minPrice, setMinPrice] = useState(filters.precioMin);
   const [maxPrice, setMaxPrice] = useState(filters.precioMax);
+  // Si el precio del store cambia desde afuera (ej: al limpiar los filtros), se copia a los inputs.
+  // Se hace durante el render comparando con el último valor visto (patrón recomendado por React
+  // para "ajustar el estado cuando cambia un dato", en lugar de un useEffect)
+  const [precioDelStore, setPrecioDelStore] = useState({ min: filters.precioMin, max: filters.precioMax });
+  if (precioDelStore.min !== filters.precioMin || precioDelStore.max !== filters.precioMax) {
+    setPrecioDelStore({ min: filters.precioMin, max: filters.precioMax });
+    setMinPrice(filters.precioMin);
+    setMaxPrice(filters.precioMax);
+  }
 
   // Las opciones de la barra lateral se piden una sola vez
   useEffect(() => {
     dispatch(fetchFacets());
   }, [dispatch]);
 
-  // La categoría de la URL (?categoriaId=) llega como filtro ya marcado
+  // Cada vez que se navega a /products, los filtros se arman desde la URL:
+  // /products -> catálogo completo; ?busqueda=rtx -> búsqueda; ?categoriaId=6 -> categoría marcada.
+  // Así el botón Atrás deshace una búsqueda y el link "Productos" no arrastra filtros viejos.
   useEffect(() => {
-    if (categoriaId) dispatch(setCategorias([Number(categoriaId)]));
-  }, [categoriaId, dispatch]);
+    dispatch(aplicarFiltrosDeUrl({
+      busqueda: busquedaUrl,
+      categoriaId: categoriaUrl ? [Number(categoriaUrl)] : [],
+    }));
+  }, [location.key, busquedaUrl, categoriaUrl, dispatch]);
 
   // Cada vez que cambian los filtros se vuelve a pedir el listado al backend
   useEffect(() => {
@@ -107,6 +127,17 @@ const ProductList = () => {
   };
 
   const currentPage = filters.pagina;
+
+  // Hay algún filtro aplicado (distinto del estado inicial). No cuentan la página ni la búsqueda,
+  // que tiene su propio botón "Quitar búsqueda"
+  const hayFiltros = Object.keys(initialFilters)
+    .filter((key) => key !== 'pagina' && key !== 'busqueda')
+    .some((key) => JSON.stringify(filters[key]) !== JSON.stringify(initialFilters[key]));
+
+  // Quita la búsqueda pero conserva la categoría que venía en la URL
+  const quitarBusqueda = () => {
+    navigate(categoriaUrl ? `/products?categoriaId=${categoriaUrl}` : '/products');
+  };
 
   // --- Manejo de estados de carga y error ---
   if (status === 'idle' || (status === 'loading' && items.length === 0)) {
@@ -226,6 +257,25 @@ const ProductList = () => {
               </select>
             </label>
           </div>
+
+          {/* Renderizado condicional: solo se muestra si hay búsqueda o filtros activos */}
+          {(filters.busqueda || hayFiltros) && (
+            <div className="product-list-active-filters">
+              {filters.busqueda && (
+                <p className="product-list-search-term">
+                  Resultados para «{filters.busqueda}»
+                  <button type="button" className="product-list-clear" onClick={quitarBusqueda}>
+                    ✕ Quitar búsqueda
+                  </button>
+                </p>
+              )}
+              {hayFiltros && (
+                <button type="button" className="product-list-clear" onClick={() => navigate('/products')}>
+                  Limpiar filtros
+                </button>
+              )}
+            </div>
+          )}
 
           {/* Renderizado condicional: operador ternario */}
           {items.length === 0 ? (
