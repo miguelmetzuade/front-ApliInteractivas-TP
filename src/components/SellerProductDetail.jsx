@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getJson } from '../services/api';
 import { formatPrice } from '../utils/formatPrice';
+import ProductGallery from './ui/ProductGallery';
 import iconArrow from '../assets/product/arrow.svg';
 import '../styles/pages/ProductDetail.css';
 import '../styles/pages/SellerProducts.css';
@@ -36,7 +37,6 @@ const SellerProductDetail = () => {
   if (error) return <div className="detail-status error">Error: {error}</div>;
   if (!product) return <div className="detail-status">No se encontró el producto</div>;
 
-  const imageUrl = product.image_url || product.imagenUrl || product.imagen;
   const inStock = product.stock > 0;
 
   return (
@@ -48,11 +48,8 @@ const SellerProductDetail = () => {
       </nav>
 
       <section className="detail-main">
-        <div className="detail-image">
-          {imageUrl
-            ? <img src={imageUrl} alt={product.nombre} />
-            : <span className="detail-image-placeholder">{product.nombre.charAt(0)}</span>}
-        </div>
+        {/* Mismo componente de galería que el detalle del comprador */}
+        <ProductGallery key={product.id} imagenes={product.imagenes} alt={product.nombre} />
 
         <div className="detail-info">
           <span className="seller-detail-badge">Tu publicación</span>

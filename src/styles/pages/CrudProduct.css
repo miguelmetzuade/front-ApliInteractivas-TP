@@ -119,12 +119,78 @@
 }
 
 .crud-product-image-preview {
-  width: 160px;
-  height: 160px;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
   border: 1px solid #ececf0;
   border-radius: 12px;
   background: #f7f7f8;
+}
+
+/* Grilla de vistas previas de las imágenes cargadas */
+.crud-product-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.crud-product-image-item {
+  position: relative;
+}
+
+.crud-product-image-badge {
+  position: absolute;
+  left: 6px;
+  bottom: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #161616;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.crud-product-image-remove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 65%);
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Input de URL externa + botón Agregar */
+.crud-product-url-row {
+  display: flex;
+  gap: 8px;
+}
+
+.crud-product-url-row input {
+  flex: 1;
+}
+
+.crud-product-url-row button {
+  padding: 0 16px;
+  border: 1px solid #161616;
+  border-radius: 10px;
+  background: #fff;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.crud-product-url-row button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .crud-product-field input:focus,

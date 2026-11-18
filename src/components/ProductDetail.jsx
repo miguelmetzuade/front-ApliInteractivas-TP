@@ -6,6 +6,7 @@ import { addToCart } from '../store/slices/cartSlice';
 import { addFavorite, removeFavorite } from '../store/slices/favoriteSlice';
 import { selectIsAuthenticated } from '../store/slices/authSlice';
 import ProductGrid from './ui/ProductGrid';
+import ProductGallery from './ui/ProductGallery';
 import iconLike from '../assets/home/like.svg';
 import iconLikeFilled from '../assets/home/like-filled.svg';
 import iconArrow from '../assets/product/arrow.svg';
@@ -106,7 +107,6 @@ const ProductDetail = () => {
     { icon: iconVerify, label: 'Guaranteed', value: '1 year' },
   ];
 
-  const imageUrl = product.image_url || product.imagenUrl || product.imagen;
 
   return (
     <div className="detail-page">
@@ -119,7 +119,9 @@ const ProductDetail = () => {
       </nav>
 
       <section className="detail-main">
-        <div className="detail-image">
+        {/* key: al pasar a otro producto (ej: desde relacionados) la galería arranca en la primera foto.
+            El botón de favoritos va como children y se dibuja encima de la imagen */}
+        <ProductGallery key={product.id} imagenes={product.imagenes} alt={product.nombre}>
           <button
             type="button"
             className="btn-like detail-like"
@@ -129,10 +131,7 @@ const ProductDetail = () => {
           >
             <img src={liked ? iconLikeFilled : iconLike} alt="" />
           </button>
-          {imageUrl
-            ? <img src={imageUrl} alt={product.nombre} />
-            : <span className="detail-image-placeholder">{product.nombre.charAt(0)}</span>}
-        </div>
+        </ProductGallery>
 
         <div className="detail-info">
           <h1 className="detail-nombre">{product.nombre}</h1>
