@@ -90,7 +90,7 @@ const favoritesSlice = createSlice({
         state.pendingIds = state.pendingIds.filter((id) => id !== action.meta.arg);
       })
       // Al cerrar sesión no quedan los favoritos del usuario anterior
-      .addCase(logout, (state) => {
+      .addCase(logout.fulfilled, (state) => {
         state.items = [];
         state.status = 'idle';
         state.error = null;

@@ -21,17 +21,22 @@ import { fetchCurrentUser } from './store/slices/authSlice'
 
 function App() {
   const dispatch = useDispatch()
-  const token = useSelector((state) => state.auth.token)
+  const email = useSelector((state) => state.auth.user?.email)
 
-  // Cada vez que cambia el token (login, registro o al recargar con sesión abierta)
-  // traemos los datos del usuario, sus favoritos y su carrito
+  // Al cargar la app le preguntamos al back si hay sesión: la cookie HttpOnly viaja sola
+  // y el front no la puede leer, así que no hay otra forma de saberlo (sobrevive al F5)
   useEffect(() => {
-    if (token) {
-      dispatch(fetchCurrentUser())
+    dispatch(fetchCurrentUser())
+  }, [dispatch])
+
+  // Cada vez que cambia el usuario (login, registro o sesión recuperada al recargar)
+  // traemos sus favoritos y su carrito desde la base
+  useEffect(() => {
+    if (email) {
       dispatch(fetchFavorites())
       dispatch(fetchCart())
     }
-  }, [dispatch, token])
+  }, [dispatch, email])
 
   return (
     <>

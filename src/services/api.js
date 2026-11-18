@@ -4,7 +4,6 @@ export const API_URL = 'http://localhost:8080/api';
 // Hace un GET al backend y devuelve el JSON de la respuesta.
 // Centraliza las opciones de fetch para no repetirlas en cada componente.
 const requestJson = async (endpoint, options = {}) => {
-  const token = localStorage.getItem('token');
   // Los archivos (ej: imagen de producto) viajan como multipart en un FormData
   const esFormData = options.body instanceof FormData;
 
@@ -19,15 +18,12 @@ const requestJson = async (endpoint, options = {}) => {
       // Indica al servidor que estamos enviando datos en formato JSON.
       // Con FormData no se define: el navegador arma el multipart/form-data con su boundary
       ...(!esFormData && { 'Content-Type': 'application/json' }),
-
-      // Envía el token JWT solo si existe en localStorage (necesario para rutas protegidas).
-      // El JwtFilter del backend espera el formato "Bearer <token>"
-      ...(token && { 'Authorization': `Bearer ${token}` })
     },
 
-    // Permite el envío de cookies y credenciales de autenticación
-    // Esto es necesario porque en el backend tenemos configuration.setAllowCredentials(true)
     body: options.body === undefined || esFormData ? options.body : JSON.stringify(options.body),
+    // El JWT viaja en la cookie HttpOnly "sesion" que setea el login: el front no la puede leer
+    // (ni la guarda en localStorage), pero con credentials: 'include' el navegador la envía sola
+    // en cada request al back. Requiere setAllowCredentials(true) en la configuración CORS del back.
     credentials: 'include',
 
     // Especifica que esta es una petición CORS (Cross-Origin Resource Sharing)

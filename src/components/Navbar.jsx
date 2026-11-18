@@ -44,7 +44,7 @@ function Navbar() {
 
   const handleLogout = () => {
     setMenuOpen(false)
-    // React agrupa la navegación y el logout en un solo render (ver useTransitions en main.jsx),
+    // Primero vamos a la home y después cerramos la sesión (el thunk llama al back para borrar la cookie):
     // así ProtectedRoute no llega a redirigir a /login si estábamos en una ruta protegida
     navigate('/')
     dispatch(logout())

@@ -3,16 +3,14 @@ import { getJson, postJson } from '../../services/api';
 
 const errorMessage = (error) => error.message || 'Ocurrió un error inesperado';
 
-// POST /api/usuarios/login { email, password } -> { token, email, role }
+// POST /api/usuarios/login { email, password } -> datos del usuario.
+// El JWT no llega en el body: el back lo manda en una cookie HttpOnly ("sesion") que el navegador
+// guarda solo y que JavaScript no puede leer. Acá solo guardamos los datos del usuario en Redux.
 export const login = createAsyncThunk(
   'auth/login',
   async (credentials, { rejectWithValue }) => {
     try {
-      const data = await postJson('/usuarios/login', credentials);
-      // El token se guarda en localStorage para que api.js lo mande en cada request
-      // y para que la sesión siga abierta al recargar la página
-      localStorage.setItem('token', data.token);
-      return data;
+      return await postJson('/usuarios/login', credentials);
     } catch (error) {
       return rejectWithValue(errorMessage(error));
     }
@@ -33,7 +31,9 @@ export const register = createAsyncThunk(
   },
 );
 
-// GET /api/usuarios/me: datos del usuario logueado (nombre, nombreUsuario, rol...)
+// GET /api/usuarios/me: datos del usuario logueado.
+// Se llama al cargar la app: como el front no puede leer la cookie, le pregunta al back
+// si hay una sesión válida. 200 -> hay sesión; 401 -> no hay cookie o el token venció.
 export const fetchCurrentUser = createAsyncThunk(
   'auth/fetchCurrentUser',
   async (_, { rejectWithValue }) => {
@@ -45,23 +45,28 @@ export const fetchCurrentUser = createAsyncThunk(
   },
 );
 
+// POST /api/usuarios/logout: el back borra la cookie (JavaScript no puede borrar una cookie HttpOnly).
+// Nunca falla: aunque el back no responda, el estado del front se limpia igual.
+export const logout = createAsyncThunk('auth/logout', async () => {
+  try {
+    await postJson('/usuarios/logout');
+  } catch {
+    // si falla la llamada, igual cerramos la sesión en el front
+  }
+});
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    // Si había un token guardado, arrancamos logueados (luego se valida con /usuarios/me)
-    token: localStorage.getItem('token'),
+    // Datos del usuario logueado (null = sin sesión). El token nunca pasa por el front.
     user: null,
+    // false hasta que /usuarios/me responde: mientras tanto no sabemos si hay sesión
+    // (ProtectedRoute espera a este flag para no mandar al login al recargar la página)
+    sessionChecked: false,
     status: 'idle',
     error: null,
   },
   reducers: {
-    logout: (state) => {
-      localStorage.removeItem('token');
-      state.token = null;
-      state.user = null;
-      state.status = 'idle';
-      state.error = null;
-    },
     clearAuthError: (state) => {
       state.error = null;
     },
@@ -74,7 +79,8 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.token = action.payload.token;
+        state.user = action.payload;
+        state.sessionChecked = true;
       })
       .addCase(login.rejected, (state, action) => {
         state.status = 'failed';
@@ -90,18 +96,23 @@ const authSlice = createSlice({
       })
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {
         state.user = action.payload;
+        state.sessionChecked = true;
       })
-      // Token vencido o inválido: cerramos la sesión
+      // Sin cookie o con el token vencido: no hay sesión
       .addCase(fetchCurrentUser.rejected, (state) => {
-        localStorage.removeItem('token');
-        state.token = null;
         state.user = null;
+        state.sessionChecked = true;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.user = null;
+        state.status = 'idle';
+        state.error = null;
       });
   },
 });
 
-export const { logout, clearAuthError } = authSlice.actions;
+export const { clearAuthError } = authSlice.actions;
 
-export const selectIsAuthenticated = (state) => Boolean(state.auth.token);
+export const selectIsAuthenticated = (state) => Boolean(state.auth.user);
 
 export default authSlice.reducer;

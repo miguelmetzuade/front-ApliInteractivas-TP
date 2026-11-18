@@ -117,7 +117,7 @@ const cartSlice = createSlice({
         state.total = 0;
       })
       // Al cerrar sesión no queda el carrito del usuario anterior
-      .addCase(logout, (state) => {
+      .addCase(logout.fulfilled, (state) => {
         state.items = [];
         state.total = 0;
         state.status = 'idle';
