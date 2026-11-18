@@ -7,12 +7,13 @@ import '../styles/pages/CrudProduct.css';
 const TIPOS_IMAGEN = ['image/jpeg', 'image/png', 'image/webp'];
 const TAMANIO_MAXIMO_IMAGEN = 5 * 1024 * 1024;
 
+// El formulario arranca vacío: los inputs controlados usan '' (no undefined)
 const INITIAL_PRODUCT = {
-  nombre: 'Teclado mecánico',
-  descripcion: 'Teclado mecánico retroiluminado',
-  precio: '45000',
-  stock: '10',
-  categoriaId: '1',
+  nombre: '',
+  descripcion: '',
+  precio: '',
+  stock: '',
+  categoriaId: '',
   image_url: '',
 };
 
@@ -222,7 +223,8 @@ const CrudProduct = () => {
               required
               disabled={loadingCategories || categories.length === 0}
             >
-              {categories.length === 0 && <option value="1">Categoría 1</option>}
+              {/* Opción inicial no elegible: con required obliga a elegir una categoría */}
+              <option value="" disabled>Elegí una categoría</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.nombre}

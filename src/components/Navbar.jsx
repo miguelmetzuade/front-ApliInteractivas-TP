@@ -44,8 +44,10 @@ function Navbar() {
 
   const handleLogout = () => {
     setMenuOpen(false)
-    dispatch(logout())
+    // React agrupa la navegación y el logout en un solo render (ver useTransitions en main.jsx),
+    // así ProtectedRoute no llega a redirigir a /login si estábamos en una ruta protegida
     navigate('/')
+    dispatch(logout())
   }
 
   // Al buscar guardamos el texto en los filtros de productsSlice y vamos al catálogo:

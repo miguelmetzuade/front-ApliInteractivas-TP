@@ -11,44 +11,62 @@ import StatusMessage from './ui/StatusMessage';
 import PlayStation from '../assets/home/playstation.png';
 import '../styles/pages/Home.css';
 
-// Pestañas de la sección de productos: cada una ordena la lista de otra forma
+// Pestañas de la sección de productos: cada una le pide al backend un orden distinto.
+// La primera es la alfabética, que es la que pide la consigna para la home.
 const TABS = [
-  { id: 'nuevos', label: 'Novedades', ordenar: (a, b) => b.id - a.id },
-  { id: 'destacados', label: 'Destacados', ordenar: (a, b) => b.precio - a.precio },
+  { id: 'az', label: 'A-Z', orden: 'nombre_asc' },
+  { id: 'menor-precio', label: 'Menor precio', orden: 'precio_asc' },
+  { id: 'mayor-precio', label: 'Mayor precio', orden: 'precio_desc' },
 ];
 
+// Cantidad de productos que se muestran en la home
+const CANTIDAD_HOME = 8;
+
 const Home = () => {
-  const [productos, setProductos] = useState([]);
-  const [categorias, setCategorias] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [tab, setTab] = useState(TABS[0].id);
+  // Cada resultado guarda de qué pestaña es: si no coincide con la activa, todavía está cargando
+  const [resultadoProductos, setResultadoProductos] = useState({ tab: null, productos: [], error: null });
+  const [resultadoCategorias, setResultadoCategorias] = useState({ cargado: false, categorias: [], error: null });
 
+  // Categorías: se piden una sola vez al montar la home
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Pedimos productos y categorías en paralelo
-        const [prods, cats] = await Promise.all([getJson('/productos?tamanio=100'), getJson('/categorias')]);
-        // GET /productos ahora devuelve { productos, totalProductos, ... }
-        setProductos(prods.productos);
-        setCategorias(cats);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    getJson('/categorias')
+      .then((categorias) => setResultadoCategorias({ cargado: true, categorias, error: null }))
+      .catch((err) => setResultadoCategorias({ cargado: true, categorias: [], error: err.message }));
   }, []);
 
-  const tabActual = TABS.find((t) => t.id === tab);
-  const productosTab = [...productos].sort(tabActual.ordenar).slice(0, 8);
+  // Productos: se vuelven a pedir cada vez que cambia la pestaña (tab es dependencia del efecto).
+  // El orden y la cantidad los resuelve el backend: GET /productos?orden=nombre_asc&tamanio=8
+  useEffect(() => {
+    // Si el usuario cambia de pestaña antes de que llegue la respuesta, se ignora la respuesta vieja
+    let ignorar = false;
+    const { orden } = TABS.find((t) => t.id === tab);
+
+    getJson(`/productos?orden=${orden}&tamanio=${CANTIDAD_HOME}`)
+      .then((data) => {
+        if (!ignorar) setResultadoProductos({ tab, productos: data.productos, error: null });
+      })
+      .catch((err) => {
+        if (!ignorar) setResultadoProductos({ tab, productos: [], error: err.message });
+      });
+
+    // Cleanup: se ejecuta antes del próximo efecto (cambio de pestaña) o al desmontar
+    return () => {
+      ignorar = true;
+    };
+  }, [tab]);
+
+  const { categorias } = resultadoCategorias;
+  const { productos } = resultadoProductos;
+  const cargandoProductos = resultadoProductos.tab !== tab;
 
   // Mensaje a mostrar en lugar de los datos mientras carga o si falló la API
-  const estado = loading
+  const estadoCategorias = !resultadoCategorias.cargado
     ? <StatusMessage>Cargando...</StatusMessage>
-    : error && <StatusMessage error>Error: {error}</StatusMessage>;
+    : resultadoCategorias.error && <StatusMessage error>Error: {resultadoCategorias.error}</StatusMessage>;
+  const estadoProductos = cargandoProductos
+    ? <StatusMessage>Cargando...</StatusMessage>
+    : resultadoProductos.error && <StatusMessage error>Error: {resultadoProductos.error}</StatusMessage>;
 
   return (
     <main className="home">
@@ -63,13 +81,13 @@ const Home = () => {
 
       <FeaturedBanners />
 
-      <CategoryCarousel categorias={categorias}>{estado || undefined}</CategoryCarousel>
+      <CategoryCarousel categorias={categorias}>{estadoCategorias || undefined}</CategoryCarousel>
 
       <Section className="home-products">
         <Tabs tabs={TABS} value={tab} onChange={setTab} />
-        {estado || (productosTab.length === 0
+        {estadoProductos || (productos.length === 0
           ? <StatusMessage>No hay productos disponibles</StatusMessage>
-          : <ProductGrid products={productosTab} />)}
+          : <ProductGrid products={productos} />)}
       </Section>
 
       <PopularBanners />
